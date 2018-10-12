@@ -2,7 +2,7 @@ import React from 'react'
 
 import Typewriter from '../components/typewriter.js'
 import Introduction from '../components/introduction.js'
-import SkillCloud from '../components/skillcloud.js'
+import SkillCloud from '../components/skillCloud.js'
 import Portfolio from '../components/portfolio.js'
 import Contact from '../components/contact.js'
 import Footer from '../components/footer.js'
