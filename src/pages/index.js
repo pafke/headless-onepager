@@ -8,11 +8,10 @@ import Contact from '../components/contact.js'
 import Footer from '../components/footer.js'
 
 const IndexPage = ({data}) => {
-    console.log(data);
     return (
         <div>
             <Typewriter />
-            <Introduction contentfulTextPartials={data.introduction} />
+            <Introduction introductionText={data.introduction.content.childMarkdownRemark.html} cv={data.cv.downloadItem.file.url} />
             <SkillCloud />
             <Portfolio blogItems={data.allContentfulPortfolioItem.edges} />
             <Contact />
@@ -40,7 +39,16 @@ export const pageQuery = graphql`
         }
         introduction: contentfulTextPartials(slug: {eq: "hello-there"}) {
             content {
-                content
+                childMarkdownRemark {
+                    html
+                }
+            }
+        }
+        cv: contentfulDownloadableItems(slug: {eq: "cv"}) {
+            downloadItem {
+                file {
+                    url
+                }
             }
         }
     }

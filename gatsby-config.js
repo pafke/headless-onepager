@@ -23,6 +23,20 @@ module.exports = {
         accessToken: 'c95a3a454fab0ad9d6f4a642f717d3d3305ae22430a9d232882f5cd4e53e2da0'
       }
     },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: "gatsby-remark-external-links",
+            options: {
+              target: "_blank",
+              rel: "nofollow"
+            }
+          }
+        ]
+      }
+    },
     'gatsby-plugin-offline',
   ],
 }

@@ -1,20 +1,31 @@
 import React from 'react'
 
-const Introduction = ({ contentfulTextPartials }) => (
-    <section>
-        Introduction
-    </section>
-)
+const Introduction = ({introductionText, cv}) => {
+    return(
+        <section>
+            <h1>Hallo daar</h1>
+            <div className="content-left" dangerouslySetInnerHTML={{__html: introductionText}}>
+            </div>
+            <div className="content-right">
+                <p>
+                    <a href={cv} className="button-ghost">
+                        Download mijn CV
+                    </a>
+                </p>
+                <p>
+                    <a href="http://nl.linkedin.com/in/timoveld" rel="noopener noreferrer" target="_blank" className="button-ghost">
+                        Linkedin
+                    </a>
+                </p>
+                <p>
+                    <a href="http://stackoverflow.com/users/5127982/timo" rel="noopener noreferrer" target="_blank" className="button-ghost">
+                        Stackoverflow
+                    </a>
+                </p>
+            </div>
+        </section>
+    )
+}
 
 export default Introduction
 
-export const pageQuery = graphql`
-    query helloThereQuery{
-        contentfulTextPartials(slug: {eq: "hello-there"}) {
-            slug
-            content {
-              content
-            }
-        }
-    }
-`
