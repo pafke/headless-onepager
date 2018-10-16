@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Contact = () => (
+const Contact = ({allotText}) => (
     <section>
-        Contact
+        <h1>Gunwerk</h1>
+        <div class="content-left" dangerouslySetInnerHTML={{__html: allotText}}>
+        </div>
     </section>
 )
 

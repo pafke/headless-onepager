@@ -13,8 +13,8 @@ const IndexPage = ({data}) => {
             <Typewriter />
             <Introduction introductionText={data.introduction.content.childMarkdownRemark.html} cv={data.cv.downloadItem.file.url} />
             <SkillCloud />
-            <Portfolio blogItems={data.allContentfulPortfolioItem.edges} />
-            <Contact />
+            <Portfolio portfolioItems={data.allContentfulPortfolioItem.edges} />
+            <Contact allotText={data.allot.content.childMarkdownRemark.html} />
             <Footer />
         </div>
     )
@@ -38,6 +38,13 @@ export const pageQuery = graphql`
             }
         }
         introduction: contentfulTextPartials(slug: {eq: "hello-there"}) {
+            content {
+                childMarkdownRemark {
+                    html
+                }
+            }
+        }
+        allot: contentfulTextPartials(slug: {eq: "allot"}) {
             content {
                 childMarkdownRemark {
                     html
