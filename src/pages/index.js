@@ -7,6 +7,7 @@ import Portfolio from '../components/portfolio.js'
 import Contact from '../components/contact.js'
 import Footer from '../components/footer.js'
 
+import "typeface-raleway";
 import '../styles/style.scss';
 
 const IndexPage = ({data}) => {
