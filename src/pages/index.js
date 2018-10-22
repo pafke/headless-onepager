@@ -7,6 +7,8 @@ import Portfolio from '../components/portfolio.js'
 import Contact from '../components/contact.js'
 import Footer from '../components/footer.js'
 
+import '../styles/style.scss';
+
 const IndexPage = ({data}) => {
     return (
         <div>
