@@ -12,7 +12,7 @@ import '../styles/style.scss';
 
 const IndexPage = ({data}) => {
     return (
-        <div>
+        <div className="text-center">
             <Typewriter />
             <Introduction introductionText={data.introduction.content.childMarkdownRemark.html} cv={data.cv.downloadItem.file.url} />
             <SkillCloud />

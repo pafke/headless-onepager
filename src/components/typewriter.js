@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Typewriter = () => (
-    <section>
+    <section className="bg-green">
         Typewriter
     </section>
 )
