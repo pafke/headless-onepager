@@ -16,6 +16,7 @@
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-helmet": "^5.2.0",
+    "react-hot-typer": "^1.0.0",
     "typeface-raleway": "0.0.54"
   },
   "keywords": [
