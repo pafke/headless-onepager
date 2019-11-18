@@ -114,8 +114,6 @@ const Typewriter = () => (
 	        speedOfLoop={500}
 	        highlightDuration={1000}
             typingSpeed={100}
-            //loop={true}
-            //selectionColor={'#FFF'}
 	    />
 	    therefore I am.
     </section>
