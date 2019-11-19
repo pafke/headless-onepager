@@ -1,4 +1,21 @@
 import React from 'react';
+import styled, { keyframes  } from 'styled-components'
+import BaseAnimation from './baseAnimation.js';
+
+const SelectAnimation = keyframes`
+    from { transform: scaleX(0) }
+    to { transform: scaleX(1)  }
+`;
+const SelectTextAnimation = styled(BaseAnimation)`
+    animation-name: ${SelectAnimation};
+    transform-origin: right;
+    position: absolute;
+    height: 100%;
+    width: 100%
+    left: 0;
+    top: 0;
+    background: #FFF;
+`;
 
 class TypeEffect extends React.Component {
     constructor(props) {
@@ -53,7 +70,6 @@ class TypeEffect extends React.Component {
             randomVerb: false,
             randomVerbKeepPart: keepCharacters,
             randomVerbReplacePart: replaceCharacters,
-            //randomVerbTypeNewPart: false
         });
         let typeNewVerb = this._typeNewVerb;
         this.counterHighlight = setTimeout(function() {
@@ -101,23 +117,28 @@ class TypeEffect extends React.Component {
     render() {
         let randomVerbReplacePart;
         if (this.state.randomVerbReplacePart) {
-            randomVerbReplacePart = <span className="highlighted">{this.state.randomVerbReplacePart}</span>;
+            randomVerbReplacePart = <span className="highlighted">
+                                        {this.state.randomVerbReplacePart}
+                                        <SelectTextAnimation
+                                            timingFunction="linear"
+                                            duration=".1s"
+                                        />
+                                    </span>;
         }
         return (
-            <div>
+            <span>
                 {this.state.randomVerb}
                 {this.state.randomVerbKeepPart}
                 {randomVerbReplacePart}
                 {this.state.randomVerbTypeNewPart}
-            </div>
+            </span>
         );
     }
 }
 
 const Typewriter = () => (
     <section className="bg-green fullscreen">
-    	I
-        <TypeEffect
+    	I <TypeEffect
 	        verbs={[
 	        	'Create',
 	        	'Develop',
@@ -127,11 +148,10 @@ const Typewriter = () => (
 	        	'Visualise',
 	        	'Animate'
 	        ]}
-	        speedOfLoop={500}
+	        speedOfLoop={1500}
 	        highlightDuration={1000}
-            typingSpeed={100}
-	    />
-	    therefore I am.
+            typingSpeed={150}
+	    /> therefore I am.
     </section>
 );
 
