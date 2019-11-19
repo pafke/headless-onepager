@@ -7,19 +7,24 @@ import Portfolio from '../components/portfolio.js'
 import Contact from '../components/contact.js'
 import Footer from '../components/footer.js'
 
-import "typeface-raleway";
-import '../styles/style.scss';
+import styled from 'styled-components';
+
+const Container = styled.div`
+    text-align: center;
+    font-family:'Raleway', sans-serif;
+    color: #444;
+`;
 
 const IndexPage = ({data}) => {
     return (
-        <div className="text-center">
+        <Container>
             <Typewriter />
             <Introduction introductionText={data.introduction.content.childMarkdownRemark.html} cv={data.cv.downloadItem.file.url} />
             <SkillCloud />
             <Portfolio portfolioItems={data.allContentfulPortfolioItem.edges} />
             <Contact allotText={data.allot.content.childMarkdownRemark.html} />
             <Footer />
-        </div>
+        </Container>
     )
 }
 

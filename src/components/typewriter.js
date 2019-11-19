@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes  } from 'styled-components'
 import BaseAnimation from './baseAnimation.js';
+import {BgGreen} from './reusableStyles.js'
 
 const SelectAnimation = keyframes`
     from { transform: scaleX(0) }
@@ -15,6 +16,12 @@ const SelectTextAnimation = styled(BaseAnimation)`
     left: 0;
     top: 0;
     background: #FFF;
+`;
+const HighlightText = styled.span`
+    position: relative;
+`;
+const TypeWriterSection = styled(BgGreen)`
+    height: 100vh;
 `;
 
 class TypeEffect extends React.Component {
@@ -117,13 +124,13 @@ class TypeEffect extends React.Component {
     render() {
         let randomVerbReplacePart;
         if (this.state.randomVerbReplacePart) {
-            randomVerbReplacePart = <span className="highlighted">
+            randomVerbReplacePart = <HighlightText>
                                         {this.state.randomVerbReplacePart}
                                         <SelectTextAnimation
-                                            timingFunction="linear"
-                                            duration=".1s"
+                                            timingFunction="ease"
+                                            duration=".15s"
                                         />
-                                    </span>;
+                                    </HighlightText>;
         }
         return (
             <span>
@@ -137,7 +144,7 @@ class TypeEffect extends React.Component {
 }
 
 const Typewriter = () => (
-    <section className="bg-green fullscreen">
+    <TypeWriterSection>
     	I <TypeEffect
 	        verbs={[
 	        	'Create',
@@ -148,11 +155,14 @@ const Typewriter = () => (
 	        	'Visualise',
 	        	'Animate'
 	        ]}
-	        speedOfLoop={1500}
+	        speedOfLoop={2500}
 	        highlightDuration={1000}
             typingSpeed={150}
-	    /> therefore I am.
-    </section>
+	    />
+        <div>
+            therefore I am.
+        </div>
+    </TypeWriterSection>
 );
 
 export default Typewriter

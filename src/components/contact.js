@@ -1,12 +1,13 @@
 import React from 'react'
+import {BgGreen,FlexContainer,LeftContent,RightContent} from './reusableStyles.js'
 
 const Contact = ({allotText}) => (
-    <section className="bg-green">
+    <BgGreen>
         <h1>Gunwerk</h1>
-        <div className="flex-container">
-            <div className="content-left" dangerouslySetInnerHTML={{__html: allotText}}>
-            </div>
-            <div className="content-right">
+        <FlexContainer>
+            <LeftContent dangerouslySetInnerHTML={{__html: allotText}}>
+            </LeftContent>
+            <RightContent>
              	<form name="contact" netlify netlify-honeypot="bot-field" hidden>
     	      		<input type="text" name="name" />
         	      	<input type="email" name="email" />
@@ -27,9 +28,9 @@ const Contact = ({allotText}) => (
         	                <button type="submit">Send</button>
         	              </p>
         	            </form>
-            </div>
-        </div>
-    </section>
-)
+            </RightContent>
+        </FlexContainer>
+    </BgGreen>
+);
 
-export default Contact
+export default Contact;

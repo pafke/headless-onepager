@@ -1,13 +1,14 @@
 import React from 'react'
+import {BgGreen} from './reusableStyles.js'
 
 const SkillCloud = () => (
-    <section className="bg-green">
+    <BgGreen>
         <h1>Skills</h1>
         <p>
         	Een greep uit de technieken waarmee ik ervaring heb.
         </p>
         *SKILLCLOUD*
-    </section>
-)
+    </BgGreen>
+);
 
 export default SkillCloud
