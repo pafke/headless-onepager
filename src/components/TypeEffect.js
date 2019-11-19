@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes  } from 'styled-components'
-import BaseAnimation from './baseAnimation.js';
+import BaseAnimation from './BaseAnimation.js';
 
 const SelectAnimation = keyframes`
     from { transform: scaleX(0) }
