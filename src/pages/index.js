@@ -7,8 +7,15 @@ import Portfolio from '../components/portfolio.js'
 import Contact from '../components/contact.js'
 import Footer from '../components/footer.js'
 
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
+//Global styles
+const GlobalStyle = createGlobalStyle`
+    @import url('https://fonts.googleapis.com/css?family=Raleway:100,400,600&display=swap');
+    body {
+        margin: 0;
+    }
+`;
 const Container = styled.div`
     text-align: center;
     font-family:'Raleway', sans-serif;
@@ -26,6 +33,7 @@ const IndexPage = ({data}) => {
             <Portfolio portfolioItems={data.allContentfulPortfolioItem.edges} />
             <Contact allotText={data.allot.content.childMarkdownRemark.html} />
             <Footer />
+            <GlobalStyle />
         </Container>
     )
 }
