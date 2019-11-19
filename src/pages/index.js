@@ -12,7 +12,9 @@ import styled from 'styled-components';
 const Container = styled.div`
     text-align: center;
     font-family:'Raleway', sans-serif;
+    font-weight: 100;
     color: #444;
+    line-height: normal;
 `;
 
 const IndexPage = ({data}) => {

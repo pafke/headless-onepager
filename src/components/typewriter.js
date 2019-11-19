@@ -20,8 +20,18 @@ const SelectTextAnimation = styled(BaseAnimation)`
 const HighlightText = styled.span`
     position: relative;
 `;
+const VerbText = styled.span`
+    font-weight: 400;
+`;
 const TypeWriterSection = styled(BgGreen)`
     height: 100vh;
+    font-size: 48px;
+    @media (min-width: 640px) {
+        font-size: 64px;
+    }
+    @media (min-width: 980px) {
+        font-size: 78px;
+    }
 `;
 
 class TypeEffect extends React.Component {
@@ -133,12 +143,12 @@ class TypeEffect extends React.Component {
                                     </HighlightText>;
         }
         return (
-            <span>
+            <VerbText>
                 {this.state.randomVerb}
                 {this.state.randomVerbKeepPart}
                 {randomVerbReplacePart}
                 {this.state.randomVerbTypeNewPart}
-            </span>
+            </VerbText>
         );
     }
 }
@@ -157,7 +167,7 @@ const Typewriter = () => (
 	        ]}
 	        speedOfLoop={2500}
 	        highlightDuration={1000}
-            typingSpeed={150}
+            typingSpeed={125}
 	    />
         <div>
             therefore I am.
