@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
 const Container = styled.div`
     text-align: center;
     font-family:'Raleway', sans-serif;
-    font-weight: 100;
+    font-weight: 400;
     color: #444;
     line-height: normal;
 `;

@@ -17,6 +17,7 @@ const SvgAnimations = props => `
     animation-fill-mode: forwards;
 `;
 const SplashScreenSection = styled(BgGreen)`
+    font-weight: 100;
     height: 100vh;
     font-size: 48px;
     @media (min-width: 640px) {
