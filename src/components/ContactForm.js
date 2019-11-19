@@ -1,7 +1,7 @@
 import React from 'react'
-import {BgGreen,FlexContainer,LeftContent,RightContent} from './reusableStyles.js'
+import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js'
 
-const Contact = ({allotText}) => (
+const ContactForm = ({allotText}) => (
     <BgGreen>
         <h1>Gunwerk</h1>
         <FlexContainer>
@@ -33,4 +33,4 @@ const Contact = ({allotText}) => (
     </BgGreen>
 );
 
-export default Contact;
+export default ContactForm;

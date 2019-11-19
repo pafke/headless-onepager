@@ -1,5 +1,5 @@
 import React from 'react'
-import {FlexContainer,LeftContent,RightContent} from './reusableStyles.js'
+import {FlexContainer,LeftContent,RightContent} from './ReusableStyles.js'
 
 const Introduction = ({introductionText, cv}) => {
     return(

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import TypeEffect from './TypeEffect.js';
-import {BgGreen} from './reusableStyles.js'
+import {BgGreen} from './ReusableStyles.js'
 
 const SplashScreenSection = styled(BgGreen)`
     height: 100vh;

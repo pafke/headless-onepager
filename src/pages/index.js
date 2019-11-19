@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { graphql } from 'gatsby';
 
-import SplashScreen from '../components/SplashScreen.js'
-import Introduction from '../components/introduction.js'
-import SkillCloud from '../components/skillCloud.js'
-import Portfolio from '../components/portfolio.js'
-import Contact from '../components/contact.js'
-import Footer from '../components/footer.js'
+import SplashScreen from '../components/SplashScreen.js';
+import Introduction from '../components/Introduction.js';
+import SkillCloud from '../components/SkillCloud.js';
+import Portfolio from '../components/Portfolio.js';
+import ContactForm from '../components/ContactForm.js';
+import Footer from '../components/Footer.js';
 
 import styled, { createGlobalStyle } from 'styled-components';
 
@@ -31,7 +32,7 @@ const IndexPage = ({data}) => {
             <Introduction introductionText={data.introduction.content.childMarkdownRemark.html} cv={data.cv.downloadItem.file.url} />
             <SkillCloud />
             <Portfolio portfolioItems={data.allContentfulPortfolioItem.edges} />
-            <Contact allotText={data.allot.content.childMarkdownRemark.html} />
+            <ContactForm allotText={data.allot.content.childMarkdownRemark.html} />
             <Footer />
             <GlobalStyle />
         </Container>

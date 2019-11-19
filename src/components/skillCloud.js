@@ -1,5 +1,5 @@
 import React from 'react'
-import {BgGreen} from './reusableStyles.js'
+import {BgGreen} from './ReusableStyles.js'
 
 const SkillCloud = () => (
     <BgGreen>
