@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Typewriter from '../components/typewriter.js'
+import SplashScreen from '../components/SplashScreen.js'
 import Introduction from '../components/introduction.js'
 import SkillCloud from '../components/skillCloud.js'
 import Portfolio from '../components/portfolio.js'
@@ -27,7 +27,7 @@ const Container = styled.div`
 const IndexPage = ({data}) => {
     return (
         <Container>
-            <Typewriter />
+            <SplashScreen />
             <Introduction introductionText={data.introduction.content.childMarkdownRemark.html} cv={data.cv.downloadItem.file.url} />
             <SkillCloud />
             <Portfolio portfolioItems={data.allContentfulPortfolioItem.edges} />
