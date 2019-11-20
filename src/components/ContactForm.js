@@ -11,7 +11,7 @@ class ContactForm extends React.Component {
             <BgGreen>
                 <h1>Gunwerk</h1>
                 <FlexContainer>
-                    <LeftContent dangerouslySetInnerHTML={{__html: this.propsallotText}}>
+                    <LeftContent dangerouslySetInnerHTML={{__html: this.props.allotText}}>
                     </LeftContent>
                     <RightContent>
                 	    <form
