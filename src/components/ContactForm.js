@@ -8,7 +8,7 @@ const ContactForm = ({allotText}) => (
             <LeftContent dangerouslySetInnerHTML={{__html: allotText}}>
             </LeftContent>
             <RightContent>
-        	    <form name="contact" method="post" data-netlify="true" data-netlify-honeypot="bot-field">
+        	    <form action="/success" name="contact" method="post" data-netlify="true" data-netlify-honeypot="bot-field">
                   <input type="hidden" name="bot-field" />
                   <input type="hidden" name="form-name" value="contact" />
                   <div className="field half first">
