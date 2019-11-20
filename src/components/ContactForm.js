@@ -43,15 +43,15 @@ class ContactForm extends React.Component {
                             <input type="hidden" name="bot-field" />
                             <div>
                                 <label htmlFor="name">Name</label>
-                                <input type="text" value={name} name="name" id="name" />
+                                <input type="text" value={name} name="name" id="name" onChange={this.handleChange} />
                             </div>
                             <div>
                                 <label htmlFor="email">Email</label>
-                                <input type="text" value={email} name="email" id="email" />
+                                <input type="text" value={email} name="email" id="email" onChange={this.handleChange} />
                             </div>
                             <div>
                                 <label htmlFor="message">Message</label>
-                                <textarea name="message" value={message} id="message" rows="6" required />
+                                <textarea name="message" value={message} id="message" rows="6" required onChange={this.handleChange} />
                             </div>
                             <div>
                                 <input type="submit" value="Drop a line" />
