@@ -8,6 +8,10 @@ const encode = (data) => {
 }
 
 class ContactForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { name: "", email: "", message: "" };
+    }
     handleSubmit = e => {
       fetch("/", {
         method: "POST",
