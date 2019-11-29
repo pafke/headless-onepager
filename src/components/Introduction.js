@@ -1,10 +1,12 @@
-import React from 'react'
-import {FlexContainer,LeftContent,RightContent} from './ReusableStyles.js'
+import React from 'react';
+import {FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
+import SvgSelf from './SelfPortrait.js';
 
 const Introduction = ({introductionText, cv}) => {
     return(
         <section>
             <h1>Hallo daar</h1>.
+            <SvgSelf />
             <FlexContainer>
                 <LeftContent dangerouslySetInnerHTML={{__html: introductionText}}>
                 </LeftContent>

@@ -94,14 +94,14 @@ const SplashScreen = () => (
                 <g>
                     <CircleAnimation fill="none" cx="69.501" cy="69.501" r="69.501" />
                     <g>
-                        <PolygonAnimation fill="none" stroke="#FFFFFF" stroke-miterlimit="10" points="69.521,99.461 20.497,50.437 118.544,50.437   "></PolygonAnimation>
-                        <LineAnimation fill="none" stroke="#FFFFFF" stroke-miterlimit="10" x1="69.521" y1="99.461" x2="69.521" y2="50.437"></LineAnimation>
+                        <PolygonAnimation fill="none" stroke="#FFFFFF"  points="69.521,99.461 20.497,50.437 118.544,50.437   "></PolygonAnimation>
+                        <LineAnimation fill="none" stroke="#FFFFFF" x1="69.521" y1="99.461" x2="69.521" y2="50.437"></LineAnimation>
                     </g>
                 </g>
             </SplashLogo>
             <ArrowDownContainer>
                 <ArrowDown version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="49.771px" height="31.333px" viewBox="0 0 49.771 31.333" enable-background="new 0 0 49.771 31.333" >
-                    <polyline fill="none" stroke="#FFFFFF" stroke-width="8" stroke-miterlimit="10" points="46.611,3.467 24.885,25.193 3.16,3.467 "/>
+                    <polyline fill="none" stroke="#FFFFFF" points="46.611,3.467 24.885,25.193 3.16,3.467 "/>
                 </ArrowDown>
             </ArrowDownContainer>
         </div>
