@@ -8,15 +8,87 @@ const SvgImage = styled.svg`
 `;
 
 class SvgSelf extends React.Component {
-    _mousemoveFunction = () => {
-        console.log('Mouse move uitvoeren om <g> elementen te verplaatsen');
-        console.log(this);
+    constructor(props) {
+        super(props);
+        this.state = {
+            mouseCoordinates: {},
+            gTransform: []
+        };
+        this.throttleMousemove = false;
+    }
+    _setGTransform = (newGTransform) => {
+        this.setState({
+            gTransform: newGTransform
+        });
+    }
+    _mouseoutFunction = () => {
+        console.log('mouse out');
+        clearTimeout(this.throttleMousemove);
+        let newGTransform = this.state.gTransform;
+        for (var i = 0; i < newGTransform.length; i++) {
+            newGTransform[i].x = 0;
+            newGTransform[i].y = 0;
+        }
+        this.setState({
+            gTransform: newGTransform
+        });
+    }
+    _mousemoveFunction = (e) => {
+        clearTimeout(this.throttleMousemove);
+        var mouseX = e.pageX;
+        var mouseY = e.pageY;
+        const setGTransform = this._setGTransform;
+        this.throttleMousemove = setTimeout(function() {
+            var listG = document.getElementById('SelfImage').querySelectorAll('g');
+            var theRangeSquared = 75 * 75;
+            var maxOffset = 20;
+            let newGTransform = [];
+            for (var i = 0; i < listG.length; i++) {
+                var position = listG[i].getBoundingClientRect();
+                var widthMod = position.width / 2;
+                var heightMod = position.height / 2;
+                var coordX = position.x + widthMod;
+                var coordY = position.y + heightMod + window.scrollY;
+                // distance from mouse
+                var dx = coordX - mouseX;
+                var dy = coordY - mouseY;
+                var distanceSquared = (dx * dx + dy * dy);
+
+                var tx = 0,
+                    ty = 0;
+                if (distanceSquared < theRangeSquared && distanceSquared !== 0) {
+                    // Calculate shift scale (inverse of distance)
+                    var shift = maxOffset * (theRangeSquared - distanceSquared) / theRangeSquared;
+                    var distance = Math.sqrt(distanceSquared);
+                    tx = shift * dx / distance;
+                    ty = shift * dy / distance;
+                }
+                newGTransform.push({
+                    x: tx,
+                    y: ty
+                });
+            }
+            setGTransform(newGTransform);
+        }, 5);
     }
     render() {
+        let counter = 0;
+        function returnTranslate(that) {
+            counter++;
+            let x = 0;
+            if(that.state.gTransform[counter-1]) {
+                x = that.state.gTransform[counter-1].x;
+            }
+            let y = 0;
+            if(that.state.gTransform[counter-1]) {
+                y = that.state.gTransform[counter-1].y;
+            }
+            return "translate("+x+" "+y+")";
+        }
         return(
-            <SvgImage onMouseMove={this._mousemoveFunction} xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px"  viewBox="0 0 320 320" enable-background="new 0 0 320 320">
+            <SvgImage id="SelfImage" onMouseLeave={this._mouseoutFunction} onMouseMove={this._mousemoveFunction} xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px"  viewBox="0 0 320 320" enable-background="new 0 0 320 320">
                 <rect fill="#444444" width="320" height="320"></rect>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#2DA17E" points="-1,243 -11,250 19,267  "></polygon>
                     <polygon fill="#39AF8F" points="49,260 66,276 68.41,267.176  "></polygon>
                     <polygon fill="#36AA87" points="-1,243 19,267 44,226  "></polygon>
@@ -35,7 +107,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#30A683" points="44,226 86,226 89,190  "></polygon>
                     <polygon fill="#30A683" points="38,192 44,226 89,190  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#35A785" points="19,267 -9,300 23,300  "></polygon>
                     <polygon fill="#2E9D7C" points="0,320 -12,323 2,327  "></polygon>
                     <polygon fill="#33A583" points="-11,250 -9,300 19,267  "></polygon>
@@ -48,7 +120,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#31A582" points="19,267 23,300 58.273,287.441  "></polygon>
                     <polygon fill="#2D9F7D" points="23,300 2,327 39,326  "></polygon>
                 </g>
-                <g>
+                <g datatest="2" transform={returnTranslate(this)}>
                     <polygon fill="#34A684" points="49,115 21,124 55,137  "></polygon>
                     <polygon fill="#2FA17F" points="-11,158 0,162 21,124  "></polygon>
                     <polygon fill="#319E7E" points="-13,43 -11,158 21,124  "></polygon>
@@ -57,7 +129,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#2C9E7C" points="21,124 0,162 55,137  "></polygon>
                     <polygon fill="#35AB88" points="61,172 38,192 89,190  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#33A583" points="89,190 94,219 100.773,217.41  "></polygon>
                     <polygon fill="#35AF8A" points="89,190 86,226 94,219  "></polygon>
                     <polygon fill="#30A980" points="89,190 100.773,217.41 108,212  "></polygon>
@@ -71,7 +143,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#4D9780" points="137,199 143,195 145,187  "></polygon>
                     <polygon fill="#37A987" points="133,202 137,199 145,182  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#30A77F" points="55,137 94,158 100,132  "></polygon>
                     <polygon fill="#2FA583" points="55,137 61,172 94,158  "></polygon>
                     <polygon fill="#2FA783" points="61,172 89,190 94,158  "></polygon>
@@ -88,7 +160,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#2EB388" points="139,154 133,150 144,170  "></polygon>
                     <polygon fill="#40AC8C" points="143,157 139,154 144,170  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#2F9C7C" points="-13,43 21,124 24,79  "></polygon>
                     <polygon fill="#288D6D" points="0,0 -13,43 10,47  "></polygon>
                     <polygon fill="#2F9474" points="0,0 10,47 29,27  "></polygon>
@@ -102,7 +174,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#2A9173" points="79,-26 29,27 80,11  "></polygon>
                     <polygon fill="#2B9D7B" points="62,59 49,115 86,80  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#31A381" points="62,59 116,62 118,51  "></polygon>
                     <polygon fill="#2F9E7D" points="80,11 121,43 126,31  "></polygon>
                     <polygon fill="#32A180" points="80,11 62,59 118,51  "></polygon>
@@ -115,7 +187,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#37A987" points="114,73 86,80 120,86  "></polygon>
                     <polygon fill="#33A784" points="86,80 119,94 120,86  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#2A9777" points="79,-26 119,9 163,1  "></polygon>
                     <polygon fill="#2C9B7A" points="79,-26 163,1 223,-26  "></polygon>
                     <polygon fill="#2E9A78" points="119,9 131,26 140,21  "></polygon>
@@ -132,7 +204,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#32A180" points="195,7 203,39 260,14  "></polygon>
                     <polygon fill="#299676" points="223,-26 195,7 260,14  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#2F9A7E" points="298,39 351,96 364,11  "></polygon>
                     <polygon fill="#2E9276" points="320,0 298,39 364,11  "></polygon>
                     <polygon fill="#2A8B6C" points="307,-18 320,0 364,11  "></polygon>
@@ -143,7 +215,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#309577" points="307,-18 298,39 320,0  "></polygon>
                     <polygon fill="#319678" points="260,14 298,39 307,-18  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#2B9E77" points="203,39 208,48 260,14  "></polygon>
                     <polygon fill="#2A9A74" points="260,14 208,48 261,42  "></polygon>
                     <polygon fill="#2EA07E" points="208,48 211,58 261,42  "></polygon>
@@ -155,7 +227,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#2EA481" points="212,69 212,78 249,106  "></polygon>
                     <polygon fill="#2FA180" points="212,78 212,86 249,106  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#32A983" points="206,110 204,119 249,106  "></polygon>
                     <polygon fill="#35A986" points="295,138 251,139 296,175  "></polygon>
                     <polygon fill="#2FA582" points="235.109,182.273 248,184 251,139  "></polygon>
@@ -171,7 +243,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#35A986" points="249,106 251,139 295,138  "></polygon>
                     <polygon fill="#2EA481" points="251,139 257,187 296,175  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#32A483" points="295,138 320,162 351,96  "></polygon>
                     <polygon fill="#2D9C7B" points="284,95 295,138 351,96  "></polygon>
                     <polygon fill="#32A888" points="320,162 309,209 345,198  "></polygon>
@@ -179,7 +251,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#33A986" points="296,175 309,209 320,162  "></polygon>
                     <polygon fill="#35A785" points="295,138 296,175 320,162  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#35A986" points="306,250 341,294 345,198  "></polygon>
                     <polygon fill="#33A986" points="309,209 306,250 345,198  "></polygon>
                     <polygon fill="#34AA87" points="296,175 283,208 309,209  "></polygon>
@@ -190,7 +262,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#2EA481" points="257,187 269,197 296,175  "></polygon>
                     <polygon fill="#36AC89" points="269,197 275,199 296,175  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#2DA17E" points="306,250 287.285,270.246 341,294  "></polygon>
                     <polygon fill="#2CA27F" points="287.285,270.246 284.98,284.91 341,294  "></polygon>
                     <polygon fill="#2CA07D" points="285.66,305.723 294,327 320,320  "></polygon>
@@ -204,7 +276,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#2EA680" points="286,232 287,240 306,250  "></polygon>
                     <polygon fill="#2BA37D" points="287,240 286,253 306,250  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#537783" points="84.891,255.102 83.371,266.09 85.086,265.281  "></polygon>
                     <polygon fill="#647682" points="70.141,276.234 77.199,287.59 77.73,273.285  "></polygon>
                     <polygon fill="#4B758B" points="85.965,303.867 86.828,306.652 87.039,302.227  "></polygon>
@@ -284,7 +356,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#8D9D9D" points="91.133,301.438 93,312 106.309,306.168  "></polygon>
                     <polygon fill="#496676" points="98,319 91,328 110,326  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#7C8992" points="137.094,306.84 139,316 147.168,306.727  "></polygon>
                     <polygon fill="#85A3AE" points="128,282 128.742,290.098 137.23,289.887  "></polygon>
                     <polygon fill="#789BAF" points="125.836,299.492 137.094,306.84 137.23,289.887  "></polygon>
@@ -329,7 +401,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#627C89" points="116.012,289.398 115.359,292.68 128.742,290.098  "></polygon>
                     <polygon fill="#93A7A5" points="128,282 116.012,289.398 128.742,290.098  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#5F7D97" points="125.637,277.137 138.219,273.117 138.953,270.895  "></polygon>
                     <polygon fill="#7797AE" points="123,260 125.637,277.137 138.953,270.895  "></polygon>
                     <polygon fill="#4E6A6E" points="91.996,253.949 99.406,253.32 99.641,245.902  "></polygon>
@@ -400,7 +472,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#AFBEC5" points="122.398,225.809 125.082,227.043 131.316,219.77  "></polygon>
                     <polygon fill="#789599" points="125.082,227.043 128.297,234.977 131.316,219.77  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#77B7A6" points="108,212 114.336,213.84 117.906,205.926  "></polygon>
                     <polygon fill="#6AB3AA" points="117.906,205.926 114.336,213.84 124,206  "></polygon>
                     <polygon fill="#B1CFDA" points="124,206 114.336,213.84 129.078,209.625  "></polygon>
@@ -429,7 +501,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#4C4744" points="164.223,191.879 158.984,194.148 168.133,209.387  "></polygon>
                     <polygon fill="#617C8F" points="157.625,228.969 167.766,238.129 174.664,225.703  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#4D7994" points="154.809,271.684 155.398,273.027 164,268  "></polygon>
                     <polygon fill="#718DA3" points="154.809,271.684 138.219,273.117 155.398,273.027  "></polygon>
                     <polygon fill="#ADB8BE" points="138.953,270.895 138.219,273.117 154.809,271.684  "></polygon>
@@ -462,7 +534,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#697D84" points="167.766,238.129 165.789,251.266 181.688,239.395  "></polygon>
                     <polygon fill="#526061" points="174.664,225.703 167.766,238.129 181.688,239.395  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#6A8485" points="178.172,303.168 176,320 180,320  "></polygon>
                     <polygon fill="#546962" points="167.996,300.301 162,320 173.457,303.684  "></polygon>
                     <polygon fill="#486273" points="173.457,303.684 176,320 178.172,303.168  "></polygon>
@@ -497,7 +569,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#465D6D" points="215.043,281.574 207.801,291.754 221.805,285.074  "></polygon>
                     <polygon fill="#64797E" points="225,320 210,325 235,325  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#7DA1B7" points="238.91,281.328 245.426,288.645 245.559,288.137  "></polygon>
                     <polygon fill="#869EAA" points="233.816,296 229.559,309.313 240.895,303.336  "></polygon>
                     <polygon fill="#B9C7D0" points="238.91,281.328 230.02,289.887 245.426,288.645  "></polygon>
@@ -557,7 +629,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#C5E1E5" points="230.02,289.887 224.328,301.602 233.816,296  "></polygon>
                     <polygon fill="#769DBE" points="227.867,289.012 230.02,289.887 237.348,280.699  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#232C33" points="239.547,260.945 235.988,272.836 248.461,268.074  "></polygon>
                     <polygon fill="#92999F" points="235.988,272.836 238.91,281.328 248.461,268.074  "></polygon>
                     <polygon fill="#6D94B5" points="224.746,270.895 235.988,272.836 239.547,260.945  "></polygon>
@@ -627,7 +699,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#A4B3B6" points="194.047,249.875 205.379,251.504 206.883,250.063  "></polygon>
                     <polygon fill="#BBD0D3" points="196.004,236.211 206.883,250.063 208.621,237.5  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#5C6A73" points="252.207,250.223 256.004,258.797 258.75,256.707  "></polygon>
                     <polygon fill="#BFD0E2" points="252.207,250.223 239.547,260.945 256.004,258.797  "></polygon>
                     <polygon fill="#313E37" points="239.547,260.945 248.461,268.074 256.004,258.797  "></polygon>
@@ -657,7 +729,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#857E85" points="276.652,249.438 286,253 287,240  "></polygon>
                     <polygon fill="#8696A3" points="277.668,237.836 276.652,249.438 287,240  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#BCC6C7" points="260.504,192.918 253.602,206.004 264.242,207.453  "></polygon>
                     <polygon fill="#CDE5E9" points="253.602,206.004 257.887,211.094 264.242,207.453  "></polygon>
                     <polygon fill="#7199B3" points="269.949,207.465 266.922,207.152 270.074,211.949  "></polygon>
@@ -693,7 +765,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#636E72" points="281.445,225.602 278.348,231.68 286,232  "></polygon>
                     <polygon fill="#737A80" points="286,232 277.668,237.836 287,240  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#667E82" points="232.125,224.563 236.348,228.012 237.859,210.941  "></polygon>
                     <polygon fill="#88A2BD" points="239.273,200.723 241.605,210.207 242.316,198.832  "></polygon>
                     <polygon fill="#8AA6B4" points="230.414,195.539 221.766,203.207 230.711,211.066  "></polygon>
@@ -737,7 +809,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#B2C9D1" points="258.066,227.352 250.914,233.219 258.438,227.625  "></polygon>
                     <polygon fill="#ABCBD6" points="251.605,192.918 253.602,206.004 260.504,192.918  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#DFF5FF" points="235.895,191.531 242.316,198.832 244.695,188.676  "></polygon>
                     <polygon fill="#DAE4ED" points="241,185 235.895,191.531 244.695,188.676  "></polygon>
                     <polygon fill="#98B2C1" points="212.438,167.949 209.719,178.758 216,173  "></polygon>
@@ -782,7 +854,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#8C9A9B" points="202.047,167.332 200.113,180.949 209.719,178.758  "></polygon>
                     <polygon fill="#8B9596" points="202.047,167.332 209.719,178.758 212.438,167.949  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#84999E" points="211.723,226.984 208.621,237.5 220.914,238.785  "></polygon>
                     <polygon fill="#203A53" points="168.133,209.387 165.828,211.828 168.953,211.961  "></polygon>
                     <polygon fill="#BAC6C6" points="174.664,225.703 181.688,239.395 181.918,225.207  "></polygon>
@@ -807,7 +879,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#A1B5C0" points="206.043,215.133 198.320,222.582 211.723,226.984  "></polygon>
                     <polygon fill="#7898A7" points="202.652,229.848 208.621,237.5 211.723,226.984  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#53686D" points="200.113,180.949 191.535,179.004 201.852,189.113  "></polygon>
                     <polygon fill="#373A3F" points="170,187 164.223,191.879 177.41,189.121  "></polygon>
                     <polygon fill="#677580" points="183.09,191.633 180.246,193.184 185.555,194.836  "></polygon>
@@ -831,7 +903,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#707C7C" points="191,174 200.113,180.949 202.047,167.332  "></polygon>
                     <polygon fill="#3C556B" points="185.789,191.414 195.77,200.199 201.852,189.113  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#4D5353" points="145,182 145,187 153.074,191.074  "></polygon>
                     <polygon fill="#78452A" points="145,182 153.074,191.074 158,170  "></polygon>
                     <polygon fill="#8B5F3A" points="153,165 144,170 158,170  "></polygon>
@@ -846,7 +918,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#865034" points="175,161 158,170 181,178  "></polygon>
                     <polygon fill="#865535" points="158,170 170,187 181,178  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#A16646" points="189,156 175,161 191,174  "></polygon>
                     <polygon fill="#A46546" points="175,161 181,178 191,174  "></polygon>
                     <polygon fill="#A6693C" points="189,156 202.047,167.332 207,159  "></polygon>
@@ -861,7 +933,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#955D3A" points="185,144 189,156 204,147  "></polygon>
                     <polygon fill="#67A282" points="204,147 207,159 210,162  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#815B46" points="120,116 124,126 124,121  "></polygon>
                     <polygon fill="#5C5A43" points="139,154 143,157 147,151  "></polygon>
                     <polygon fill="#D07864" points="124,121 127,125 130,118  "></polygon>
@@ -882,7 +954,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#A96F4A" points="155,116 146,130 171,136  "></polygon>
                     <polygon fill="#6C3B1A" points="171,136 159,145 175,161  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#864622" points="190,107 176,108 190,117  "></polygon>
                     <polygon fill="#814722" points="176,108 181,128 190,117  "></polygon>
                     <polygon fill="#7E442E" points="169,115 171,136 181,128  "></polygon>
@@ -899,7 +971,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#824621" points="190,117 181,128 203,136  "></polygon>
                     <polygon fill="#8F5C47" points="197,103 206,110 209,99  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#DE8D70" points="128,92 133,98 134,92  "></polygon>
                     <polygon fill="#B76A4E" points="128,92 127,99 133,98  "></polygon>
                     <polygon fill="#70361E" points="119,94 120,107 121,100  "></polygon>
@@ -926,7 +998,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#E6A07C" points="127,83 127,87 134,92  "></polygon>
                     <polygon fill="#F0BB99" points="127,83 134,92 141,75  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#F8CCA9" points="120,80 127,83 128,75  "></polygon>
                     <polygon fill="#ECB692" points="118,51 137,59 139,51  "></polygon>
                     <polygon fill="#9D9177" points="116,62 114,73 117,68  "></polygon>
@@ -950,7 +1022,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#804326" points="138,68 128,75 141,75  "></polygon>
                     <polygon fill="#F0BEA5" points="126,31 139,51 145,34  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#F4ECE9" points="140,21 145,34 155,19  "></polygon>
                     <polygon fill="#F1D1BC" points="140,21 131,26 145,34  "></polygon>
                     <polygon fill="#E7D0B0" points="131,26 126,31 145,34  "></polygon>
@@ -967,7 +1039,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#CE9C79" points="187,26 174,41 193,32  "></polygon>
                     <polygon fill="#CA936C" points="174,41 180,55 193,32  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#A9714C" points="180,55 176,68 191,59  "></polygon>
                     <polygon fill="#9A7A63" points="208,48 199,52 211,58  "></polygon>
                     <polygon fill="#A4724F" points="191,59 176,68 192,80  "></polygon>
@@ -982,7 +1054,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#925E36" points="191,59 201,74 211,58  "></polygon>
                     <polygon fill="#9C6A45" points="199,52 191,59 211,58  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#915531" points="177,93 189,100 191,87  "></polygon>
                     <polygon fill="#93461C" points="191,87 201,97 201,91  "></polygon>
                     <polygon fill="#904822" points="191,87 189,100 201,97  "></polygon>
@@ -1004,7 +1076,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#C77550" points="204,84 201,91 212,86  "></polygon>
                     <polygon fill="#BB411C" points="208,75 204,84 212,78  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#D79D75" points="141,75 149,99 149,72  "></polygon>
                     <polygon fill="#F1BEA3" points="149,72 149,99 163,87  "></polygon>
                     <polygon fill="#704125" points="142,66 145,69 148,65  "></polygon>
@@ -1028,7 +1100,7 @@ class SvgSelf extends React.Component {
                     <polygon fill="#C47B5B" points="176,68 163,87 177,93  "></polygon>
                     <polygon fill="#C27E57" points="158,57 176,68 180,55  "></polygon>
                 </g>
-                <g>
+                <g transform={returnTranslate(this)}>
                     <polygon fill="#C27C5A" points="149,99 155,116 162,106  "></polygon>
                     <polygon fill="#CC876A" points="149,99 162,106 163,87  "></polygon>
                     <polygon fill="#A36242" points="162,106 176,108 177,93  "></polygon>
