@@ -14,8 +14,11 @@ class SvgSelf extends React.Component {
             gTransform: []
         };
         this.throttleMousemove = false;
-        this.SvgContainer = React.createRef();
+        this.listPolygons = false;
         this.counter = 0;
+    }
+    componentDidMount = () => {
+        this.listPolygons = this.svgContainer.querySelectorAll('polygon');
     }
     _setGTransform = (newGTransform) => {
         this.setState({
@@ -38,7 +41,7 @@ class SvgSelf extends React.Component {
         var mouseX = e.pageX;
         var mouseY = e.pageY;
         const setGTransform = this._setGTransform;
-        const listPolygons = this.SvgContainer.current.querySelectorAll('polygon');
+        const listPolygons = this.listPolygons;
         this.throttleMousemove = setTimeout(function() {
             var theRangeSquared = 110 * 110;
             var maxOffset = 12;
@@ -83,9 +86,9 @@ class SvgSelf extends React.Component {
         return "translate("+x+" "+y+")";
     }
     render() {
-        this.counter = 0;
+        this.counter = 0
         return(
-            <SvgImage ref={this.SvgContainer} onMouseLeave={this._mouseoutFunction} onMouseMove={this._mousemoveFunction} xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px"  viewBox="0 0 320 320" enable-background="new 0 0 320 320">
+            <SvgImage ref={(svgContainer) => this.svgContainer = svgContainer} onMouseLeave={this._mouseoutFunction} onMouseMove={this._mousemoveFunction} xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px"  viewBox="0 0 320 320" enable-background="new 0 0 320 320">
                 <rect fill="#444444" width="320" height="320"></rect>
                 <polygon transform={this._returnTranslate()} fill="#2DA17E" points="-1,243 -11,250 19,267  "></polygon>
                 <polygon transform={this._returnTranslate()} fill="#39AF8F" points="49,260 66,276 68.41,267.176  "></polygon>
