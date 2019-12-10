@@ -68,6 +68,7 @@ const ArrowDownContainer = styled.div`
 `;
 const ArrowDown = styled.svg`
     animation: ${HeartBeat} .60s infinite alternate;
+    stroke-width: 8;
 `;
 
 const SplashScreen = () => (
