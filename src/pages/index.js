@@ -7,6 +7,7 @@ import SkillCloud from '../components/SkillCloud.js';
 import Portfolio from '../components/Portfolio.js';
 import ContactForm from '../components/ContactForm.js';
 import Footer from '../components/Footer.js';
+import LogoContainer from '../components/LogoContainer.js';
 
 import styled, { createGlobalStyle } from 'styled-components';
 
@@ -25,18 +26,30 @@ const Container = styled.div`
     line-height: normal;
 `;
 
-const IndexPage = ({data}) => {
-    return (
-        <Container>
-            <SplashScreen />
-            <Introduction introductionText={data.introduction.content.childMarkdownRemark.html} cv={data.cv.downloadItem.file.url} />
-            <SkillCloud />
-            <Portfolio portfolioItems={data.allContentfulPortfolioItem.edges} />
-            <ContactForm allotText={data.allot.content.childMarkdownRemark.html} />
-            <Footer />
-            <GlobalStyle />
-        </Container>
-    )
+class IndexPage extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            hideLogo: true
+        };
+    }
+    _setLogoVisibility = (splashScreenVisible) => {
+        this.setState({hideLogo: splashScreenVisible})
+    }
+    render() {
+        return (
+            <Container onScroll={this._testScroll}>
+                <LogoContainer hideThis={this.state.hideLogo} />
+                <SplashScreen splashScreenVisible={this._setLogoVisibility} />
+                <Introduction introductionText={this.props.data.introduction.content.childMarkdownRemark.html} cv={this.props.data.cv.downloadItem.file.url} />
+                <SkillCloud />
+                <Portfolio portfolioItems={this.props.data.allContentfulPortfolioItem.edges} />
+                <ContactForm allotText={this.props.data.allot.content.childMarkdownRemark.html} />
+                <Footer />
+                <GlobalStyle />
+            </Container>
+        )
+    }
 }
 
 export default IndexPage
