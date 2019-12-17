@@ -30,7 +30,7 @@ class IndexPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            hideLogo: true
+            hideLogo: 'firstLoad'
         };
     }
     _setLogoVisibility = (splashScreenVisible) => {

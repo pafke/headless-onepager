@@ -2,10 +2,10 @@ import React from 'react';
 import styled, { keyframes  } from 'styled-components'
 import BaseAnimation from './BaseAnimation.js';
 
-const setFadeStatus = (hideThis) => {
-    if (hideThis) {
+const setFadeStatus = (fadeStatus) => {
+    if (fadeStatus === 'fadeOut') {
         return FadeOutAnimation
-    } else {
+    } else if(fadeStatus === 'fadeIn')  {
         return FadeInAnimation;
     }
 }
@@ -22,6 +22,7 @@ const FadeAnimation = styled(BaseAnimation)`
     position: fixed;
     left: 10px;
     top: 10px;
+    opacity: 0;
 `;
 const Logo = styled.svg`
     width: 100px;
@@ -29,13 +30,24 @@ const Logo = styled.svg`
 `;
 
 class LogoContainer extends React.Component {
-    componentDidMount = () => {
-        console.log('this.props');
-        console.log(this.props);
+    constructor() {
+        super();
+        this.state = {
+            fadeStatus: false
+        };
+    }
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.hideThis === false) {
+            return { fadeStatus:'fadeIn' };
+        } else if(nextProps.hideThis === true && prevState.fadeStatus === 'fadeIn') {
+            return { fadeStatus:'fadeOut' };
+        } else{
+            return null;
+        }
     }
     render() {
         return(
-            <FadeAnimation hideThis={this.props.hideThis}>
+            <FadeAnimation duration=".3s" hideThis={this.state.fadeStatus}>
                 <Logo xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 142 139" enable-background="new 0 0 139.001 139.001">
                     <g>
                         <circle fill="#000" cx="69.501" cy="69.501" r="69.501"></circle>
