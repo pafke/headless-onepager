@@ -24,16 +24,26 @@ const FadeAnimation = styled(BaseAnimation)`
     top: 10px;
     opacity: 0;
 `;
+const setFlip = function(flipLogo) {
+    if(flipLogo) {
+        return 'rotateY(180deg)';
+    } else {
+        return 'rotateY(0deg)';
+    }
+}
 const Logo = styled.svg`
+    transform: ${props => setFlip(props.flipLogo)};
     width: 100px;
     height: 100px;
+    transition: transform .6s ease;
 `;
 
 class LogoContainer extends React.Component {
     constructor() {
         super();
         this.state = {
-            fadeStatus: false
+            fadeStatus: false,
+            flipLogo: false
         };
     }
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -45,10 +55,18 @@ class LogoContainer extends React.Component {
             return null;
         }
     }
+    _flipLogo = () => {
+        console.log('flip');
+        this.setState({"flipLogo": true});
+    }
+    _unFlipLogo = () => {
+        console.log('unflip');
+        this.setState({"flipLogo": false});
+    }
     render() {
         return(
-            <FadeAnimation duration=".3s" hideThis={this.state.fadeStatus}>
-                <Logo xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 142 139" enable-background="new 0 0 139.001 139.001">
+            <FadeAnimation onMouseEnter={this._flipLogo} onMouseLeave={this._unFlipLogo} duration=".3s" hideThis={this.state.fadeStatus}>
+                <Logo flipLogo={this.state.flipLogo} xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 142 139" enable-background="new 0 0 139.001 139.001">
                     <g>
                         <circle fill="#000" cx="69.501" cy="69.501" r="69.501"></circle>
                         <g>
