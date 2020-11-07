@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const pjson = require('./package.json');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
   //Voor production wordt de env.production op true gezet in het npm build commando, voor development wordt deze niet gezet
@@ -27,8 +27,7 @@ module.exports = (env, argv) => {
     resolve: { extensions: ["*", ".js", ".jsx"] },
     output: {
       path: path.resolve(__dirname, "dist/"),
-      publicPath: "/dist/",
-      filename: (environment === 'production') ? 'template'+pjson.templateId+'.js' : 'bundle.js'
+      filename: 'bundle.js'
     },
     optimization: {
       minimize: (environment === 'production') ? true : false
@@ -42,7 +41,11 @@ module.exports = (env, argv) => {
       overlay: true
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new HtmlWebpackPlugin({
+        title: 'Timoveld.nl',
+        template: './public/index.html'
+      })
     ]
   };
 };
