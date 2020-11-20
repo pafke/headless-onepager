@@ -13,6 +13,7 @@ import SplashScreen from './components/SplashScreen.js';
 
 const Container = styled.div`
     border: solid red 1px;
+    text-align: center;
 `;
 const ElementWithThemedStyling = styled.div`
     border: solid ${props => props.borderColor} 1px;
