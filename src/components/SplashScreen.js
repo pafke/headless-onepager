@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled, { keyframes }  from 'styled-components'
 import TypeEffect from './TypeEffect.js';
 import {BgGreen} from './ReusableStyles.js'
@@ -71,14 +71,15 @@ const ArrowDown = styled.svg`
     stroke-width: 8;
 `;
 
-class SplashScreen extends React.Component {
-    componentDidMount = () => {
+function SplashScreen (props) {
+    const [splashScreenReference, setSplashScreenReference] = useState(false);
+    useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if(entry.intersectionRatio === 0) {
-                    this.props.splashScreenVisible(false);
+                    props.splashScreenVisible(false);
                 } else {
-                    this.props.splashScreenVisible(true);
+                    props.splashScreenVisible(true);
                 }
             },
             {
@@ -87,48 +88,47 @@ class SplashScreen extends React.Component {
                 treshhold: 1.0
             }
         );
-        if(this.splashScreenRef) {
-            observer.observe(this.splashScreenRef);
+        if(splashScreenReference) {
+            observer.observe(splashScreenReference);
         }
-    }
-    render() {
-        return (
-            <SplashScreenSection ref={(splashScreenRef) => this.splashScreenRef = splashScreenRef}>
+    });
+    return (
+        <SplashScreenSection ref={(splashScreenRef) =>  setSplashScreenReference(splashScreenRef) }>
+            <div>
+                I <TypeEffect
+                    verbs={[
+                        'Create',
+                        'Develop',
+                        'Render',
+                        'Design',
+                        'Debug',
+                        'Visualise',
+                        'Animate'
+                    ]}
+                    speedOfLoop={2500}
+                    highlightDuration={1000}
+                    typingSpeed={125}
+                />
                 <div>
-                    I <TypeEffect
-                        verbs={[
-                            'Create',
-                            'Develop',
-                            'Render',
-                            'Design',
-                            'Debug',
-                            'Visualise',
-                            'Animate'
-                        ]}
-                        speedOfLoop={2500}
-                        highlightDuration={1000}
-                        typingSpeed={125}
-                    />
-                    <div>
-                        therefore I am.
-                    </div>
-                    <SplashLogo xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="-1 0 142 139" enable-background="new 0 0 139.001 139.001">
-                        <g>
-                            <CircleAnimation fill="none" cx="69.501" cy="69.501" r="69.501" />
-                            <g>
-                                <PolygonAnimation fill="none" stroke="#FFFFFF"  points="69.521,99.461 20.497,50.437 118.544,50.437   "></PolygonAnimation>
-                                <LineAnimation fill="none" stroke="#FFFFFF" x1="69.521" y1="99.461" x2="69.521" y2="50.437"></LineAnimation>
-                            </g>
-                        </g>
-                    </SplashLogo>
-                    <ArrowDownContainer>
-                        <ArrowDown version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="49.771px" height="31.333px" viewBox="0 0 49.771 31.333" enable-background="new 0 0 49.771 31.333" >
-                            <polyline fill="none" stroke="#FFFFFF" points="46.611,3.467 24.885,25.193 3.16,3.467 "/>
-                        </ArrowDown>
-                    </ArrowDownContainer>
+                    therefore I am.
                 </div>
-            </SplashScreenSection>
-        );
-    }
-};
+                <SplashLogo xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="-1 0 142 139" enable-background="new 0 0 139.001 139.001">
+                    <g>
+                        <CircleAnimation fill="none" cx="69.501" cy="69.501" r="69.501" />
+                        <g>
+                            <PolygonAnimation fill="none" stroke="#FFFFFF"  points="69.521,99.461 20.497,50.437 118.544,50.437   "></PolygonAnimation>
+                            <LineAnimation fill="none" stroke="#FFFFFF" x1="69.521" y1="99.461" x2="69.521" y2="50.437"></LineAnimation>
+                        </g>
+                    </g>
+                </SplashLogo>
+                <ArrowDownContainer>
+                    <ArrowDown version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="49.771px" height="31.333px" viewBox="0 0 49.771 31.333" enable-background="new 0 0 49.771 31.333" >
+                        <polyline fill="none" stroke="#FFFFFF" points="46.611,3.467 24.885,25.193 3.16,3.467 "/>
+                    </ArrowDown>
+                </ArrowDownContainer>
+            </div>
+        </SplashScreenSection>
+    );
+}
+
 export default SplashScreen

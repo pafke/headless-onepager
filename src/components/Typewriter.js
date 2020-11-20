@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-class TypeEffect extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { randomVerb: false};
-    }
-    componentDidMount = () => {
+function TypeEffect () {
+    const randomVerb = useState(false);
+    useEffect(() => {
         this.setState({randomVerb: this._getRandomVerb()});
         this._startCounterNewVerb();
-    }
+    });
     _getRandomVerb = () => {
         let randomVerb = this.props.verbs[Math.floor(Math.random()*this.props.verbs.length)];
         if(randomVerb === this.state.randomVerb) {
@@ -17,14 +14,14 @@ class TypeEffect extends React.Component {
         } else {
             return randomVerb;
         }
-    }
+    };
     _startCounterNewVerb = () => {
         clearTimeout(this.counterNewVerb);
         const counterNewVerb = this._counterNewVerb;
         this.counterNewVerb = setTimeout(function() {
             counterNewVerb();
         }, this.props.speedOfLoop);
-    }
+    };
     _counterNewVerb = () => {
         console.log('A');
         //Verschil tussen nieuwe waardes tonen
@@ -51,15 +48,12 @@ class TypeEffect extends React.Component {
         console.log(keepCharacters);
         console.log(replaceCharacters);
 
-
-    }
-    render() {
-        return (
-            <div>
-                {this.state.randomVerb}
-            </div>
-        );
-    }
+    };
+    return (
+        <div>
+            {this.state.randomVerb}
+        </div>
+    );
 }
 
 const Typewriter = () => (
