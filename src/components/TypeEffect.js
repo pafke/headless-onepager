@@ -27,13 +27,12 @@ function TypeEffect (props) {
     let currentRandomVerb;
     let newRandomVerb;
     let typerTimer;
-    const [randomVerb, setRandomVerb] = useState(false);
     const [randomVerbKeepPart, setRandomVerbKeepPart] = useState(false);
     const [randomVerbReplacePart, setRandomVerbReplacePart] = useState(false);
     const [randomVerbTypeNewPart, setRandomVerbTypeNewPart] = useState(false);
     useEffect(() => {
+        //Op eerste load, eerste verb zetten en timer starten om 2e verb te genereren en verschil aan te duiden
         _startApp();
-
     },[]);
     const _startApp = () => {
         _getRandomVerb();
@@ -45,20 +44,18 @@ function TypeEffect (props) {
         typerTimer = setTimeout(function() {
             _getRandomVerb();
             _getVerbDifference(newRandomVerb, currentRandomVerb);
-            //_startTimer();
         }, props.speedOfLoop);
     }
     const _getRandomVerb = () => {
+        //Nieuwwe random verb genereren
         currentRandomVerb = newRandomVerb;
         newRandomVerb = props.verbs[Math.floor(Math.random()*props.verbs.length)];
-        console.log(newRandomVerb);
-        console.log(currentRandomVerb);
         if(newRandomVerb === currentRandomVerb) {
-            console.log('Retrying');
             _getRandomVerb();
         }
     }
     const _getVerbDifference = (newVerb, currentVerb) => {
+        //Nieuwe verb en oude vergelijken, indien string zelfde characters aan begin heeft, deze behouden
         let newVerbSeperated = newVerb.split('');
         let currentVerbSeperated = currentVerb.split('');
         let sameCharacters = 0;
@@ -74,15 +71,19 @@ function TypeEffect (props) {
             keepCharacters = keepCharacters.join('');
             replaceCharacters = replaceCharacters.join('');
         let newCharacters = newVerbSeperated.slice(sameCharacters, newVerbSeperated.length);
+        //Verschil tussen nieuwe en oude verb highlighten
         setRandomVerbKeepPart(keepCharacters);
         setRandomVerbReplacePart(replaceCharacters);
+        //Highlight in beeld laten voor zolang gezet is in de prop 'highlightDuration'
         setTimeout(function() {
             _typeNewCharacters(newCharacters);
         }, props.highlightDuration);
     }
     const _typeNewCharacters = (newCharacters) => {
         let newCharactersString = '';
+        //Highlight stuk inactief zetten
         setRandomVerbReplacePart(false);
+        //Nieuwe letters uit typen, via nieuwe functie doen omdat anders i kwijt raakt in de for loop
         for (var i = 0; i < newCharacters.length; i++) {
             newCharactersString = newCharactersString+newCharacters[i];
             _setTimeoutForTyping(newCharactersString, i, newCharacters.length);
@@ -90,10 +91,10 @@ function TypeEffect (props) {
     }
     const _setTimeoutForTyping = (characters, index, fullLength) => {
         setTimeout(function() {
+            //Wanneer nieuwe deel volledig uit getypt is, randomVerbTypeNewPart resetten en randomVerbKeepPart op nieuwe volledige string zetten
             if(index === fullLength-1) {
                 setRandomVerbKeepPart(newRandomVerb);
                 setRandomVerbTypeNewPart(false);
-                console.log('Start new');
                 _startTimer();
             } else {
                 setRandomVerbTypeNewPart(characters);
