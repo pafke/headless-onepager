@@ -11,7 +11,7 @@ const SelectTextAnimation = styled(BaseAnimation)`
     transform-origin: right;
     position: absolute;
     height: 100%;
-    width: 100%
+    width: 100%;
     left: 0;
     top: 0;
     background: #FFF;
@@ -24,6 +24,7 @@ const VerbText = styled.span`
 `;
 
 function TypeEffect (props) {
+    let currentRandomVerb;
     let newRandomVerb;
     let typerTimer;
     const [randomVerb, setRandomVerb] = useState(false);
@@ -36,23 +37,68 @@ function TypeEffect (props) {
     },[]);
     const _startApp = () => {
         _getRandomVerb();
-        setRandomVerb(newRandomVerb);
+        setRandomVerbKeepPart(newRandomVerb);
         _startTimer();
     }
     const _startTimer = () => {
         clearTimeout(typerTimer);
         typerTimer = setTimeout(function() {
             _getRandomVerb();
-            setRandomVerb(newRandomVerb);
-            _startTimer();
+            _getVerbDifference(newRandomVerb, currentRandomVerb);
+            //_startTimer();
         }, props.speedOfLoop);
     }
     const _getRandomVerb = () => {
+        currentRandomVerb = newRandomVerb;
         newRandomVerb = props.verbs[Math.floor(Math.random()*props.verbs.length)];
-        if(newRandomVerb === randomVerb) {
+        console.log(newRandomVerb);
+        console.log(currentRandomVerb);
+        if(newRandomVerb === currentRandomVerb) {
             console.log('Retrying');
             _getRandomVerb();
         }
+    }
+    const _getVerbDifference = (newVerb, currentVerb) => {
+        let newVerbSeperated = newVerb.split('');
+        let currentVerbSeperated = currentVerb.split('');
+        let sameCharacters = 0;
+        for (var i = 0; i < newVerbSeperated.length; i++) {
+            if(currentVerbSeperated[i] && newVerbSeperated[i] === currentVerbSeperated[i]) {
+                sameCharacters = i+1;
+            } else {
+                break;
+            }
+        }
+        let keepCharacters = currentVerbSeperated.slice(0, sameCharacters);
+        let replaceCharacters = currentVerbSeperated.slice(sameCharacters, currentVerbSeperated.length);
+            keepCharacters = keepCharacters.join('');
+            replaceCharacters = replaceCharacters.join('');
+        let newCharacters = newVerbSeperated.slice(sameCharacters, newVerbSeperated.length);
+        setRandomVerbKeepPart(keepCharacters);
+        setRandomVerbReplacePart(replaceCharacters);
+        setTimeout(function() {
+            _typeNewCharacters(newCharacters);
+        }, props.highlightDuration);
+    }
+    const _typeNewCharacters = (newCharacters) => {
+        let newCharactersString = '';
+        setRandomVerbReplacePart(false);
+        for (var i = 0; i < newCharacters.length; i++) {
+            newCharactersString = newCharactersString+newCharacters[i];
+            _setTimeoutForTyping(newCharactersString, i, newCharacters.length);
+        }
+    }
+    const _setTimeoutForTyping = (characters, index, fullLength) => {
+        setTimeout(function() {
+            if(index === fullLength-1) {
+                setRandomVerbKeepPart(newRandomVerb);
+                setRandomVerbTypeNewPart(false);
+                console.log('Start new');
+                _startTimer();
+            } else {
+                setRandomVerbTypeNewPart(characters);
+            }
+        }, index*props.typingSpeed);
     }
     let renderRandomVerbReplacePart;
     if (randomVerbReplacePart) {
@@ -66,9 +112,8 @@ function TypeEffect (props) {
     }
     return (
         <VerbText>
-            {randomVerb}
             {randomVerbKeepPart}
-            {randomVerbReplacePart}
+            {renderRandomVerbReplacePart}
             {randomVerbTypeNewPart}
         </VerbText>
     );
