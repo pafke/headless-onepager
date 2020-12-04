@@ -2,7 +2,11 @@ import React from 'react';
 import {FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
 import SvgSelf from './SelfPortrait.js';
 
-const Introduction = ({introductionText, cv}) => {
+function Introduction (props) {
+    let introductionText;
+    if(props.textPartials && props.textPartials["hello-there"]) {
+        introductionText = props.textPartials["hello-there"];
+    }
     return(
         <section>
             <h1>Hallo daar</h1>.
@@ -12,7 +16,7 @@ const Introduction = ({introductionText, cv}) => {
                 </LeftContent>
                 <RightContent>
                     <p>
-                        <a href={cv}>
+                        <a href={props.cv}>
                             Download mijn CV
                         </a>
                     </p>
