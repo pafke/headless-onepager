@@ -1,5 +1,5 @@
 import React from 'react'
-import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js'
+import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
 
 const encode = (data) => {
     return Object.keys(data)

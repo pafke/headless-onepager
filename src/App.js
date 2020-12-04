@@ -5,7 +5,7 @@ import SplashScreen from './components/SplashScreen.js';
 import Introduction from './components/Introduction.js';
 //import SkillCloud from './components/SkillCloud.js';
 //import Portfolio from './components/Portfolio.js';
-import ContactForm from './components/Contact.js';
+import ContactForm from './components/ContactForm.js';
 //import Footer from './components/Footer.js';
 //import LogoContainer from './components/LogoContainer.js';
 
