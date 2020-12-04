@@ -28,7 +28,6 @@ function Introduction (props) {
     return(
         <section>
             <h1>Hallo daar</h1>.
-            <SvgSelf />
             <FlexContainer>
                 <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
                 </LeftContent>
@@ -50,6 +49,7 @@ function Introduction (props) {
                     </p>
                 </RightContent>
             </FlexContainer>
+            <SvgSelf />
         </section>
     )
 }

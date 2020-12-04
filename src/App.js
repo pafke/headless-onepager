@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { request, gql } from 'graphql-request';
 
 import SplashScreen from './components/SplashScreen.js';
 import Introduction from './components/Introduction.js';
 //import SkillCloud from './components/SkillCloud.js';
 //import Portfolio from './components/Portfolio.js';
-//import ContactForm from './components/ContactForm.js';
+import ContactForm from './components/Contact.js';
 //import Footer from './components/Footer.js';
 //import LogoContainer from './components/LogoContainer.js';
 
@@ -27,6 +26,7 @@ function App () {
         <Container>
             <SplashScreen splashScreenVisible={_setLogoVisibility} />
             <Introduction />
+            <ContactForm />
         </Container>
     );
 }
