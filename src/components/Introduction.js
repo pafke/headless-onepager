@@ -1,22 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
 import SvgSelf from './SelfPortrait.js';
+import { request, gql } from 'graphql-request';
 
 function Introduction (props) {
-    let introductionText;
-    if(props.textPartials && props.textPartials["hello-there"]) {
-        introductionText = props.textPartials["hello-there"];
+    const [textPartial, setTextPartial] = useState(false);
+    const [cvUrl, setCvUrl] = useState('#');
+    useEffect(() => {
+        const query = gql`
+            {
+                asset(where: { name: "cv" }) {
+                    url
+                },
+                    textPartial(where: { name: "hello-there" }) {
+                    content {
+                        html
+                    }
+                }
+            }
+        `;
+        request('https://api-eu-central-1.graphcms.com/v2/ckh68bz8a1xyh01yxh3qa131q/master', query).then((data) => _getCorrectData(data))
+    },[]);
+    const _getCorrectData = (data) => {
+        setTextPartial(data.textPartial.content.html);
+        setCvUrl(data.asset.url);
     }
     return(
         <section>
             <h1>Hallo daar</h1>.
             <SvgSelf />
             <FlexContainer>
-                <LeftContent dangerouslySetInnerHTML={{__html: introductionText}}>
+                <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
                 </LeftContent>
                 <RightContent>
                     <p>
-                        <a href={props.cv}>
+                        <a href={cvUrl}>
                             Download mijn CV
                         </a>
                     </p>
