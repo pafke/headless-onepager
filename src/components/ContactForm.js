@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
+import { request, gql } from 'graphql-request';
 
 const encode = (data) => {
     return Object.keys(data)
@@ -7,12 +8,29 @@ const encode = (data) => {
         .join("&");
 }
 
-class ContactForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { name: "", email: "", message: "", feedback: false };
+const ContactForm = function(props) {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [feedback, setFeedback] = useState(false);
+    const [textPartial, setTextPartial] = useState(false);
+    let showingFeedback;
+    useEffect(() => {
+        const query = gql`
+            {
+                textPartial(where: { name: "allot" }) {
+                    content {
+                        html
+                    }
+                }
+            }
+        `;
+        request('https://api-eu-central-1.graphcms.com/v2/ckh68bz8a1xyh01yxh3qa131q/master', query).then((data) => _getCorrectData(data))
+    },[]);
+    const _getCorrectData = (data) => {
+        setTextPartial(data.textPartial.content.html);
     }
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         fetch("/", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -28,60 +46,71 @@ class ContactForm extends React.Component {
         });
         e.preventDefault();
     }
-    _resetFeedback = () => {
-        this.setState({feedback: false});
+    const _resetFeedback = () => {
+        setFeedback(false);
     }
-    showFeedback = (feedback) => {
-        clearTimeout(this.showingFeedback);
-        this.setState({feedback: feedback, name: "", email: "", message: ""});
-        const resetFeedback = this._resetFeedback;
-        this.showingFeedback = setTimeout(function() {
-            resetFeedback();
+    const showFeedback = (feedback) => {
+        clearTimeout(showingFeedback);
+
+        setFeedback(feedback);
+        setName('');
+        setEmail('');
+        setMessage('');
+
+        showingFeedback = setTimeout(function() {
+            _resetFeedback();
         }, 5000);
     }
-    handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value , feedback: false });
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+        setFeedback(false);
     }
-    render() {
-        const { name, email, message } = this.state;
-        return(
-            <BgGreen>
-                <h1>Gunwerk</h1>
-                <FlexContainer>
-                    <LeftContent dangerouslySetInnerHTML={{__html: this.props.allotText}}>
-                    </LeftContent>
-                    <RightContent>
-                	    <form
-                            name="contact"
-                            method="post"
-                            data-netlify="true"
-                            data-netlify-honeypot="bot-field"
-                            onSubmit={this.handleSubmit}
-                        >
-                            <input type="hidden" name="bot-field" />
-                            <div>
-                                <label htmlFor="name">Naam</label>
-                                <input type="text" value={name} name="name" id="name" onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="email">Email</label>
-                                <input type="text" value={email} name="email" id="email" onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="message">Bericht</label>
-                                <textarea name="message" value={message} id="message" rows="6" required onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <input type="submit" value="Drop a line" />
-                                <input type="reset" value="Eraser" />
-                            </div>
-                        </form>
-                        {this.state.feedback}
-                    </RightContent>
-                </FlexContainer>
-            </BgGreen>
-        );
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+        setFeedback(false);
     }
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value);
+        setFeedback(false);
+    }
+    return(
+        <BgGreen>
+            <h1>Gunwerk</h1>
+            <FlexContainer>
+                <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
+                </LeftContent>
+                <RightContent>
+                    <form
+                        name="contact"
+                        method="post"
+                        data-netlify="true"
+                        data-netlify-honeypot="bot-field"
+                        onSubmit={handleSubmit}
+                    >
+                        <input type="hidden" name="bot-field" />
+                        <div>
+                            <label htmlFor="name">Naam</label>
+                            <input type="text" value={name} name="name" id="name" onChange={handleNameChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="email">Email</label>
+                            <input type="text" value={email} name="email" id="email" onChange={handleEmailChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="message">Bericht</label>
+                            <textarea name="message" value={message} id="message" rows="6" required onChange={handleMessageChange} />
+                        </div>
+                        <div>
+                            <input type="submit" value="Drop a line" />
+                            <input type="reset" value="Eraser" />
+                        </div>
+                    </form>
+                    {feedback}
+                </RightContent>
+            </FlexContainer>
+        </BgGreen>
+    );
 }
+
 
 export default ContactForm;
