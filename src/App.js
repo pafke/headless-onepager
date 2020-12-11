@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import SplashScreen from './components/SplashScreen.js';
 import Introduction from './components/Introduction.js';
-//import SkillCloud from './components/SkillCloud.js';
+import SkillCloud from './components/SkillCloud.js';
 import ContactForm from './components/ContactForm.js';
 import Footer from './components/Footer.js';
 import LogoContainer from './components/LogoContainer.js';
@@ -27,6 +27,7 @@ function App () {
             <LogoContainer logoVisibility={logoVisibility} />
             <SplashScreen splashScreenVisible={_setLogoVisibility} />
             <Introduction />
+            <SkillCloud />
             <ContactForm />
             <Footer />
         </Container>

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { request, gql } from 'graphql-request';
 import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
+import styled from 'styled-components';
+
+const ContactForm = styled.section`
+    h1 {
+        margin: 0;
+    }
+`;
 
 function Contact(props) {
     const [textPartial, setTextPartial] = useState(false);
@@ -20,8 +27,8 @@ function Contact(props) {
         setTextPartial(data.textPartial.content.html);
     }
     return (
-        <BgGreen>
-            <h1>Gunwerk</h1>
+        <ContactForm>
+            <h1>Gunwerk asdasdasd</h1>
             <FlexContainer>
                 <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
                 </LeftContent>
@@ -43,7 +50,7 @@ function Contact(props) {
                     </form>
                 </RightContent>
             </FlexContainer>
-        </BgGreen>
+        </ContactForm>
     );
 }
 

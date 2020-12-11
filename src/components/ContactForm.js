@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
 import { request, gql } from 'graphql-request';
+import styled from 'styled-components';
+
+const Container = styled.section`
+    h1 {
+        margin: 0;
+    }
+`;
 
 const encode = (data) => {
     return Object.keys(data)
@@ -74,7 +81,7 @@ const ContactForm = function(props) {
         setFeedback(false);
     }
     return(
-        <BgGreen>
+        <Container>
             <h1>Gunwerk</h1>
             <FlexContainer>
                 <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
@@ -108,7 +115,7 @@ const ContactForm = function(props) {
                     {feedback}
                 </RightContent>
             </FlexContainer>
-        </BgGreen>
+        </Container>
     );
 }
 
