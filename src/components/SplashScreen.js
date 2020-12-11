@@ -77,9 +77,9 @@ function SplashScreen (props) {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if(entry.intersectionRatio === 0) {
-                    props.splashScreenVisible(false);
-                } else {
                     props.splashScreenVisible(true);
+                } else {
+                    props.splashScreenVisible(false);
                 }
             },
             {

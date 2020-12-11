@@ -27,7 +27,7 @@ function Introduction (props) {
     }
     return(
         <section>
-            <h1>Hallo daar</h1>.
+            <h1>Hallo daar</h1>
             <FlexContainer>
                 <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
                 </LeftContent>

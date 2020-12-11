@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import SplashScreen from './components/SplashScreen.js';
 import Introduction from './components/Introduction.js';
 //import SkillCloud from './components/SkillCloud.js';
-//import Portfolio from './components/Portfolio.js';
 import ContactForm from './components/ContactForm.js';
-//import Footer from './components/Footer.js';
-//import LogoContainer from './components/LogoContainer.js';
+import Footer from './components/Footer.js';
+import LogoContainer from './components/LogoContainer.js';
 
 const Container = styled.div`
-    border: solid red 1px;
     text-align: center;
 `;
 const ElementWithThemedStyling = styled.div`
@@ -18,15 +16,19 @@ const ElementWithThemedStyling = styled.div`
 `;
 
 function App () {
+    const [logoVisibility, setLogoVisibility] = useState(false);
     const _setLogoVisibility = (splashScreenVisible) => {
-        console.log('Set logo visibility to: '+splashScreenVisible);
-        //this.setState({hideLogo: splashScreenVisible})
+        if(logoVisibility !== splashScreenVisible) {
+            setLogoVisibility(splashScreenVisible);
+        }
     }
     return (
         <Container>
+            <LogoContainer logoVisibility={logoVisibility} />
             <SplashScreen splashScreenVisible={_setLogoVisibility} />
             <Introduction />
             <ContactForm />
+            <Footer />
         </Container>
     );
 }

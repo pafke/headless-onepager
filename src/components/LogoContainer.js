@@ -1,12 +1,14 @@
-import React from 'react';
+import React,  { useState, useEffect, useRef } from 'react';
 import styled, { keyframes  } from 'styled-components'
 import BaseAnimation from './BaseAnimation.js';
 
-const setFadeStatus = (fadeStatus) => {
-    if (fadeStatus === 'fadeOut') {
-        return FadeOutAnimation
-    } else if(fadeStatus === 'fadeIn')  {
-        return FadeInAnimation;
+const setFadeStatus = (setLogoVisibility) => {
+    if(setLogoVisibility !== 'firstrun') {
+        if (setLogoVisibility) {
+            return FadeInAnimation;
+        } else if(!setLogoVisibility)  {
+            return FadeOutAnimation
+        }
     }
 }
 const FadeInAnimation = keyframes`
@@ -18,11 +20,11 @@ const FadeOutAnimation = keyframes`
     to { opacity: 0; }
 `;
 const FadeAnimation = styled(BaseAnimation)`
-    animation-name: ${props => setFadeStatus(props.hideThis)};
+    opacity: 0;
+    animation-name: ${props => setFadeStatus(props.logoVisibility)};
     position: fixed;
     left: 10px;
     top: 10px;
-    opacity: 0;
 `;
 const setFlip = function(flipLogo) {
     if(flipLogo) {
@@ -38,46 +40,36 @@ const Logo = styled.svg`
     transition: transform .6s ease;
 `;
 
-class LogoContainer extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            fadeStatus: false,
-            flipLogo: false
-        };
+const LogoContainer = function(props) {
+    const isFirstRun = useRef(true);
+    const [flipLogo, setFlipLogo] = useState(false);
+    const [logoVisibility, setLogoVisibility] = useState('firstrun');
+    useEffect(() => {
+        if (isFirstRun.current) {
+              isFirstRun.current = false;
+              return;
+            }
+            setLogoVisibility(props.logoVisibility);
+    });
+    const _flipLogo = function() {
+        setFlipLogo(true);
     }
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.hideThis === false) {
-            return { fadeStatus:'fadeIn' };
-        } else if(nextProps.hideThis === true && prevState.fadeStatus === 'fadeIn') {
-            return { fadeStatus:'fadeOut' };
-        } else{
-            return null;
-        }
+    const _unFlipLogo = function() {
+        setFlipLogo(false);
     }
-    _flipLogo = () => {
-        console.log('flip');
-        this.setState({"flipLogo": true});
-    }
-    _unFlipLogo = () => {
-        console.log('unflip');
-        this.setState({"flipLogo": false});
-    }
-    render() {
-        return(
-            <FadeAnimation onMouseEnter={this._flipLogo} onMouseLeave={this._unFlipLogo} duration=".3s" hideThis={this.state.fadeStatus}>
-                <Logo flipLogo={this.state.flipLogo} xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 142 139" enable-background="new 0 0 139.001 139.001">
+    return(
+        <FadeAnimation onMouseEnter={_flipLogo} onMouseLeave={_unFlipLogo} duration=".3s" logoVisibility={logoVisibility}>
+            <Logo flipLogo={flipLogo} xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 142 139" enable-background="new 0 0 139.001 139.001">
+                <g>
+                    <circle fill="#000" cx="69.501" cy="69.501" r="69.501"></circle>
                     <g>
-                        <circle fill="#000" cx="69.501" cy="69.501" r="69.501"></circle>
-                        <g>
-                            <polygon fill="none" stroke="#FFFFFF" points="69.521,99.461 20.497,50.437 118.544,50.437   "></polygon>
-                            <line fill="none" stroke="#FFFFFF" x1="69.521" y1="99.461" x2="69.521" y2="50.437"></line>
-                        </g>
+                        <polygon fill="none" stroke="#FFFFFF" points="69.521,99.461 20.497,50.437 118.544,50.437   "></polygon>
+                        <line fill="none" stroke="#FFFFFF" x1="69.521" y1="99.461" x2="69.521" y2="50.437"></line>
                     </g>
-                </Logo>
-            </FadeAnimation>
-        )
-    }
+                </g>
+            </Logo>
+        </FadeAnimation>
+    )
 }
 
 export default LogoContainer
