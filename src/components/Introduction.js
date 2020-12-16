@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
+import {FlexContainer,LeftContent,RightContent, Container} from './ReusableStyles.js';
 import SvgSelf from './SelfPortrait.js';
 import { request, gql } from 'graphql-request';
+import styled from 'styled-components';
 
-function Introduction (props) {
+function Introduction ({forwardedRef}) {
     const [textPartial, setTextPartial] = useState(false);
     const [cvUrl, setCvUrl] = useState('#');
     useEffect(() => {
@@ -26,7 +27,7 @@ function Introduction (props) {
         setCvUrl(data.asset.url);
     }
     return(
-        <section>
+        <Container ref={forwardedRef}>
             <h1>Hallo daar</h1>
             <FlexContainer>
                 <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
@@ -50,7 +51,7 @@ function Introduction (props) {
                 </RightContent>
             </FlexContainer>
             <SvgSelf />
-        </section>
+        </Container>
     )
 }
 

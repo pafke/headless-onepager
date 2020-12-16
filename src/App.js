@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import SplashScreen from './components/SplashScreen.js';
@@ -17,6 +17,8 @@ const ElementWithThemedStyling = styled.div`
 
 function App () {
     const [logoVisibility, setLogoVisibility] = useState(false);
+    const introductionRef = useRef(null);
+    const _scrollDown = () => introductionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     const _setLogoVisibility = (splashScreenVisible) => {
         if(logoVisibility !== splashScreenVisible) {
             setLogoVisibility(splashScreenVisible);
@@ -25,8 +27,8 @@ function App () {
     return (
         <Container>
             <LogoContainer logoVisibility={logoVisibility} />
-            <SplashScreen splashScreenVisible={_setLogoVisibility} />
-            <Introduction />
+            <SplashScreen _scrollDown={_scrollDown} splashScreenVisible={_setLogoVisibility} />
+            <Introduction forwardedRef={introductionRef} />
             <SkillCloud />
             <ContactForm />
             <Footer />

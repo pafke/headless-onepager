@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styled, { keyframes }  from 'styled-components'
 import TypeEffect from './TypeEffect.js';
-import {BgGreen} from './ReusableStyles.js'
 
 const DashOffset = keyframes`
     from { stroke-dashoffset: 1000 }
@@ -16,7 +15,9 @@ const SvgAnimations = props => `
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 `;
-const SplashScreenSection = styled(BgGreen)`
+const SplashScreenSection = styled.section`
+    background-color: #50ccb7;
+    color: #FFF;
     font-weight: 100;
     height: 100vh;
     font-size: 48px;
@@ -65,21 +66,22 @@ const ArrowDownContainer = styled.div`
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+    cursor: pointer;
 `;
 const ArrowDown = styled.svg`
     animation: ${HeartBeat} .60s infinite alternate;
     stroke-width: 8;
 `;
 
-function SplashScreen (props) {
-    const [splashScreenReference, setSplashScreenReference] = useState(false);
+function SplashScreen ({splashScreenVisible, _scrollDown}) {
+    const splashScreenRef = useRef(null);
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if(entry.intersectionRatio === 0) {
-                    props.splashScreenVisible(true);
+                    splashScreenVisible(true);
                 } else {
-                    props.splashScreenVisible(false);
+                    splashScreenVisible(false);
                 }
             },
             {
@@ -88,12 +90,12 @@ function SplashScreen (props) {
                 treshhold: 1.0
             }
         );
-        if(splashScreenReference) {
-            observer.observe(splashScreenReference);
+        if(splashScreenRef) {
+            observer.observe(splashScreenRef.current);
         }
     });
     return (
-        <SplashScreenSection ref={(splashScreenRef) =>  setSplashScreenReference(splashScreenRef) }>
+        <SplashScreenSection ref={splashScreenRef}>
             <div>
                 I <TypeEffect
                     verbs={[
@@ -121,7 +123,7 @@ function SplashScreen (props) {
                         </g>
                     </g>
                 </SplashLogo>
-                <ArrowDownContainer>
+                <ArrowDownContainer onClick={_scrollDown}>
                     <ArrowDown version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="49.771px" height="31.333px" viewBox="0 0 49.771 31.333" enable-background="new 0 0 49.771 31.333" >
                         <polyline fill="none" stroke="#FFFFFF" points="46.611,3.467 24.885,25.193 3.16,3.467 "/>
                     </ArrowDown>
