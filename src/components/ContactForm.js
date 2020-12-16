@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
+import {BgGreen,FlexContainer,LeftContent,RightContent, Container} from './ReusableStyles.js';
 import { request, gql } from 'graphql-request';
 import styled from 'styled-components';
-
-const Container = styled.section`
-    h1 {
-        margin: 0;
-    }
-`;
 
 const encode = (data) => {
     return Object.keys(data)
