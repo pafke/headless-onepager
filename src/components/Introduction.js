@@ -43,7 +43,7 @@ function Introduction ({forwardedRef}) {
                 asset(where: { name: "cv" }) {
                     url
                 },
-                    textPartial(where: { name: "hello-there" }) {
+                textPartial(where: { name: "hello-there" }) {
                     content {
                         html
                     }

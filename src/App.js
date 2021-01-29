@@ -16,7 +16,8 @@ const Container = styled.div`
         color: #50ccb7;
     }
     p {
-        margin: 0 0 10px 0;
+        margin: 0 0 7px 0;
+        overflow: auto;
     }
 `;
 const ElementWithThemedStyling = styled.div`
