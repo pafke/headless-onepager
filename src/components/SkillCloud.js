@@ -4,24 +4,19 @@ import { TagCloud } from 'react-tagcloud';
 import styled, {keyframes} from 'styled-components';
 
 const data = [
-    { value: 'jQuery', count: 50 },
-    { value: 'MongoDB', count: 18 },
-    { value: 'JavaScript', count: 38 },
-    { value: 'React', count: 30 },
-    { value: 'Nodejs', count: 28 },
-    { value: 'Express.js', count: 25 },
-    { value: 'HTML5', count: 33 },
-    { value: 'CSS3', count: 20 },
-    { value: 'Webpack', count: 22 },
-    { value: 'Babel.js', count: 7 },
-    { value: 'ECMAScript', count: 25 },
-    { value: 'Jest', count: 15 },
-    { value: 'Mocha', count: 17 },
-    { value: 'React Native', count: 27 },
-    { value: 'Angular.js', count: 30 },
-    { value: 'TypeScript', count: 15 },
-    { value: 'Flow', count: 30 },
-    { value: 'NPM', count: 11 }
+    { value: 'HTML', count: 10 },
+    { value: 'CSS', count: 10 },
+    { value: 'Javascript', count: 10 },
+    { value: 'Git', count: 9 },
+    { value: 'React', count: 9 },
+    { value: 'LESS', count: 8 },
+    { value: 'SASS', count: 8 },
+    { value: 'NPM', count: 7 },
+    { value: 'Node', count: 5},
+    { value: 'Socket.io', count: 4 },
+    { value: 'Webpack', count: 3 },
+    { value: 'Babel.js', count: 3 },
+    { value: 'Electron', count: 1 }
 ];
 const rotate = keyframes`
     0%
