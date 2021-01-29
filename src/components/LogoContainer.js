@@ -35,9 +35,13 @@ const setFlip = function(flipLogo) {
 }
 const Logo = styled.svg`
     transform: ${props => setFlip(props.flipLogo)};
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     transition: transform .6s ease;
+    @media (min-width: 640px) {
+        width: 100px;
+        height: 100px;
+    }
 `;
 
 const LogoContainer = function(props) {

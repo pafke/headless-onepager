@@ -54,8 +54,10 @@ const Tag = styled.div`
     color: white;
 `;
 const TagCloudContainer = styled.div`
-    width: 40%;
-    margin: 0 auto;
+    @media (min-width: 640px) {
+        width: 40%;
+        margin: 0 auto;
+    }
 `;
 
 // custom renderer is function which has tag, computed font size and

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const BgGreen = styled.section`
+    padding: 20px;
     background-color: #50ccb7;
     color: #FFF;
     h1 {
@@ -13,6 +14,8 @@ const BgGreen = styled.section`
     }
 `;
 const Container = styled.section`
+    padding: 20px;
+    box-sizing: border-box;
     h1 {
         margin: 0;
         color: #50ccb7;
@@ -27,18 +30,26 @@ const Container = styled.section`
     }
 `;
 const FlexContainer = styled.div`
-    display: flex;
-    justify-content: center;
+    @media (min-width: 640px) {
+        display: flex;
+        justify-content: center;
+    }
 `;
 const LeftContent = styled.div`
-    text-align: right;
-    width: 40%;
-    margin-right: 20px;
+    margin-bottom: 10px;
+    @media (min-width: 640px) {
+        text-align: right;
+        width: 40%;
+        margin: 0 20px 0 0;
+    }
 `;
 const RightContent = styled.div`
-    text-align: left;
-    width: 40%;
-    margin-left: 20px;
+    margin-bottom: 10px;
+    @media (min-width: 640px) {
+        text-align: left;
+        width: 40%;
+        margin: 0 0 0 20px;
+    }
 `;
 
 export {

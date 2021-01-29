@@ -5,9 +5,13 @@ import polygonArray from './assets/polygonArray.json';
 import Polygon from './Polygon.js';
 
 const SvgImage = styled.svg`
-    width: 320px;
-    height: 320px;
-    border-radius: 50%
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    @media (min-width: 640px) {
+        width: 320px;
+        height: 320px;
+    }
 `;
 
 function SvgSelf(props) {

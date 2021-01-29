@@ -10,7 +10,6 @@ const ButtonLight = styled.a`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60%;
     text-align: center;
     background: #FFF;
     border: solid 2px #50ccb7;
@@ -31,6 +30,9 @@ const ButtonLight = styled.a`
         path {
             fill: #FFF;
         }
+    }
+    @media (min-width: 640px) {
+        width: 60%;
     }
 `;
 

@@ -16,8 +16,11 @@ const ContactInfo = styled.div`
     }
     a {
         display: block;
-        font-size: 24px;
+        font-size: 20px;
         margin: 10px 0;
+        @media (min-width: 640px) {
+            font-size: 24px;
+        }
     }
     p {
         margin: 20px 0 0 0;
