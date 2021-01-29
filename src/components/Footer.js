@@ -14,6 +14,14 @@ const ContactInfo = styled.div`
         font-size: 28px;
         margin-bottom: 10px;
     }
+    a {
+        display: block;
+        font-size: 24px;
+        margin: 10px 0;
+    }
+    p {
+        margin: 20px 0 0 0;
+    }
 `;
 
 function Footer(props) {

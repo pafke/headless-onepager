@@ -10,6 +10,14 @@ import LogoContainer from './components/LogoContainer.js';
 
 const Container = styled.div`
     text-align: center;
+    font-size: 20px;
+    a {
+        text-decoration: none;
+        color: #50ccb7;
+    }
+    p {
+        margin: 0 0 10px 0;
+    }
 `;
 const ElementWithThemedStyling = styled.div`
     border: solid ${props => props.borderColor} 1px;

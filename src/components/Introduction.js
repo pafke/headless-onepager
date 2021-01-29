@@ -1,8 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import {FlexContainer,LeftContent,RightContent, Container} from './ReusableStyles.js';
 import SvgSelf from './SelfPortrait.js';
+import StackoverflowIcon from './assets/StackoverflowIcon.js';
+import LinkedinIcon from './assets/LinkedinIcon.js';
 import { request, gql } from 'graphql-request';
 import styled from 'styled-components';
+
+const ButtonLight = styled.a`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    text-align: center;
+    background: #FFF;
+    border: solid 2px #50ccb7;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    svg {
+        height: 18px;
+        width: auto;
+        margin-right: 6px;
+    }
+    path {
+        fill: #50CCB7;
+    }
+    &:hover {
+        background: #50ccb7;
+        color: #FFF;
+        path {
+            fill: #FFF;
+        }
+    }
+`;
 
 function Introduction ({forwardedRef}) {
     const [textPartial, setTextPartial] = useState(false);
@@ -33,21 +63,17 @@ function Introduction ({forwardedRef}) {
                 <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
                 </LeftContent>
                 <RightContent>
-                    <p>
-                        <a href={cvUrl}>
-                            Download mijn CV
-                        </a>
-                    </p>
-                    <p>
-                        <a href="http://nl.linkedin.com/in/timoveld" rel="noopener noreferrer" target="_blank">
-                            Linkedin
-                        </a>
-                    </p>
-                    <p>
-                        <a href="http://stackoverflow.com/users/5127982/timo" rel="noopener noreferrer" target="_blank">
-                            Stackoverflow
-                        </a>
-                    </p>
+                    <ButtonLight href={cvUrl}>
+                        Download mijn CV
+                    </ButtonLight>
+                    <ButtonLight href="http://nl.linkedin.com/in/timoveld" rel="noopener noreferrer" target="_blank">
+                        <LinkedinIcon />
+                        Linkedin
+                    </ButtonLight>
+                    <ButtonLight href="http://stackoverflow.com/users/5127982/timo" rel="noopener noreferrer" target="_blank">
+                        <StackoverflowIcon />
+                        Stackoverflow
+                    </ButtonLight>
                 </RightContent>
             </FlexContainer>
             <SvgSelf />
