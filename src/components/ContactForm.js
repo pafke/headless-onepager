@@ -1,68 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {BgGreen,FlexContainer,LeftContent,RightContent, Container} from './ReusableStyles.js';
+import {BgGreen,FlexContainer,LeftContent,RightContent} from './ReusableStyles.js';
 import { request, gql } from 'graphql-request';
-import styled from 'styled-components';
-
-const SubmitButton = styled.input`
-    cursor: pointer;
-    &:hover {
-        background: #FFF;
-        color: #50ccb7;
-    }
-`;
-const FormContainer = styled.div`
-    background: #50ccb7;
-    color: #000;
-    padding: 8%;
-    div {
-        position: relative;
-        margin-bottom: 45px;
-    }
-    ${SubmitButton} {
-        border: solid 2px #FFF;
-        padding: 15px;
-    }
-    input, textarea {
-        caret-color: #FFF;
-        background: none;
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        font-size: 18px;
-        padding: 10px 10px 10px 5px;
-        border: none;
-        border-bottom: 1px solid #FFF;
-        color: #FFF;
-        &:focus, &:active, &:valid {
-            outline: none;
-            ~ label {
-                top: -20px;
-                left: 0;
-                font-size: 70%;
-            }
-            ~ div {
-                width: 100%;
-                left: 0;
-            }
-        }
-    }
-    label {
-        position: absolute;
-        color: #FFF;
-        left: 0;
-        top: 0;
-        transition: top .15s ease-in-out;
-    }
-`;
-const Bar = styled.div`
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background: #FFF;
-    transition: all .15s ease-in-out;
-    left: 50%;
-`;
-
 
 const encode = (data) => {
     return Object.keys(data)
@@ -136,43 +74,41 @@ const ContactForm = function(props) {
         setFeedback(false);
     }
     return(
-        <Container>
+        <BgGreen>
             <h1>Gunwerk</h1>
             <FlexContainer>
                 <LeftContent dangerouslySetInnerHTML={{__html: textPartial}}>
                 </LeftContent>
                 <RightContent>
-                    <FormContainer>
-                        <form
-                            name="contact"
-                            method="post"
-                            data-netlify="true"
-                            data-netlify-honeypot="bot-field"
-                            onSubmit={handleSubmit}
-                        >
-                            <input type="hidden" name="bot-field" />
-                            <div>
-                                <input type="text" value={name} name="name" id="name" onChange={handleNameChange} />
-                                <label htmlFor="name">Naam</label>
-                                <Bar />
-                            </div>
-                            <div>
-                                <input type="text" value={email} name="email" id="email" onChange={handleEmailChange} />
-                                <label htmlFor="email">Email</label>
-                                <Bar />
-                            </div>
-                            <div>
-                                <textarea name="message" value={message} id="message" rows="6" onChange={handleMessageChange} />
-                                <label htmlFor="message">Project beschrijving</label>
-                                <Bar />
-                            </div>
-                            <SubmitButton type="submit" value="Gunnen man!" />
-                        </form>
-                        {feedback}
-                    </FormContainer>
+                    <form
+                        name="contact"
+                        method="post"
+                        data-netlify="true"
+                        data-netlify-honeypot="bot-field"
+                        onSubmit={handleSubmit}
+                    >
+                        <input type="hidden" name="bot-field" />
+                        <div>
+                            <label htmlFor="name">Naam</label>
+                            <input type="text" value={name} name="name" id="name" onChange={handleNameChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="email">Email</label>
+                            <input type="text" value={email} name="email" id="email" onChange={handleEmailChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="message">Bericht</label>
+                            <textarea name="message" value={message} id="message" rows="6" required onChange={handleMessageChange} />
+                        </div>
+                        <div>
+                            <input type="submit" value="Drop a line" />
+                            <input type="reset" value="Eraser" />
+                        </div>
+                    </form>
+                    {feedback}
                 </RightContent>
             </FlexContainer>
-        </Container>
+        </BgGreen>
     );
 }
 
