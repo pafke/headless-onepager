@@ -58,7 +58,6 @@ class ContactForm extends React.Component {
                             method="post"
                             data-netlify="true"
                             data-netlify-honeypot="bot-field"
-                            onSubmit={this.handleSubmit}
                         >
                             <input type="hidden" name="bot-field" />
                             <div>
@@ -74,7 +73,7 @@ class ContactForm extends React.Component {
                                 <textarea name="message" value={message} id="message" rows="6" required onChange={this.handleChange} />
                             </div>
                             <div>
-                                <input type="submit" value="Drop a line" />
+                                <button onClick={this.handleSubmit} value="Drop a line" /> TEST12345 <button/>
                                 <input type="reset" value="Eraser" />
                             </div>
                         </form>
