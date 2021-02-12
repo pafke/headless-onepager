@@ -152,17 +152,17 @@ const ContactForm = function(props) {
                         >
                             <input type="hidden" name="bot-field" />
                             <div>
-                                <input type="text" value={name} name="name" id="name" required onChange={handleNameChange} />
+                                <input type="text" value={name} name="name" id="name" onChange={handleNameChange} />
                                 <label htmlFor="name">Naam</label>
                                 <Bar />
                             </div>
                             <div>
-                                <input type="text" value={email} name="email" id="email" required onChange={handleEmailChange} />
+                                <input type="text" value={email} name="email" id="email" onChange={handleEmailChange} />
                                 <label htmlFor="email">Email</label>
                                 <Bar />
                             </div>
                             <div>
-                                <textarea name="message" value={message} id="message" rows="6" required required onChange={handleMessageChange} />
+                                <textarea name="message" value={message} id="message" rows="6" onChange={handleMessageChange} />
                                 <label htmlFor="message">Project beschrijving</label>
                                 <Bar />
                             </div>
