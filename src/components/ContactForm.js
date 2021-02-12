@@ -14,7 +14,7 @@ class ContactForm extends React.Component {
     }
     handleSubmit = (e) => {
         console.log(...this.state);
-
+        e.preventDefault();
         /*fetch("/", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -28,7 +28,7 @@ class ContactForm extends React.Component {
             console.log(error)
             this.showFeedback("Er ging iets mis!");
         });
-        e.preventDefault();*/
+        */
     }
     _resetFeedback = () => {
         this.setState({feedback: false});
