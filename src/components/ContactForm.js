@@ -169,7 +169,7 @@ const ContactForm = function(props) {
                                 <label htmlFor="message">Project beschrijving</label>
                                 <Bar />
                             </div>
-                            <SubmitButton type="button" value="Gunnen man!" />
+                            <SubmitButton type="submit" value="Gunnen man!" />
                         </form>
                         {feedback}
                     </FormContainer>
