@@ -178,6 +178,7 @@ const ContactForm = function(props) {
                             </div>
                             <SubmitButton onClick={handleSubmit} type="button" value="Gunnen man!" />
                         </form>
+                        {feedback}
                     </FormContainer>
                 </RightContent>
             </FlexContainer>
