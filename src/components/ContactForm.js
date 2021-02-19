@@ -62,7 +62,11 @@ const Bar = styled.div`
     transition: all .15s ease-in-out;
     left: 50%;
 `;
-
+const Feedback = styled.span`
+    display: block;
+    margin-top: 10px;
+    color: #FFF;
+`;
 
 const encode = (data) => {
     return Object.keys(data)
@@ -119,8 +123,8 @@ const ContactForm = function(props) {
     }
     const showFeedback = (feedback) => {
         clearTimeout(showingFeedback);
-
-        setFeedback(feedback);
+        const feedbackHtml = <Feedback>{feedback}</Feedback>
+        setFeedback(feedbackHtml);
         setName('');
         setEmail('');
         setMessage('');
@@ -174,7 +178,6 @@ const ContactForm = function(props) {
                             </div>
                             <SubmitButton onClick={handleSubmit} type="button" value="Gunnen man!" />
                         </form>
-                        {feedback}
                     </FormContainer>
                 </RightContent>
             </FlexContainer>
