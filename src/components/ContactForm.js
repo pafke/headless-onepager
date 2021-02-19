@@ -153,14 +153,7 @@ const ContactForm = function(props) {
                 </LeftContent>
                 <RightContent>
                     <FormContainer>
-                        <form
-                            name="contact"
-                            method="post"
-                            data-netlify="true"
-                            data-netlify-honeypot="bot-field"
-                            onSubmit={handleSubmit}
-                        >
-                            <input type="hidden" name="bot-field" />
+                        <form onSubmit={handleSubmit}>
                             <div>
                                 <input type="text" value={name} name="name" id="name" required onChange={handleNameChange} />
                                 <label htmlFor="name">Naam</label>
@@ -176,7 +169,7 @@ const ContactForm = function(props) {
                                 <label htmlFor="message">Project beschrijving</label>
                                 <Bar />
                             </div>
-                            <SubmitButton onClick={handleSubmit} type="button" value="Gunnen man!" />
+                            <SubmitButton type="button" value="Gunnen man!" />
                         </form>
                         {feedback}
                     </FormContainer>
